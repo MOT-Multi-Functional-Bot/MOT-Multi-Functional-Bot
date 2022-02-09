@@ -1,4 +1,4 @@
-# MOB-Multi-Functional-Bot
+# MOT-Multi-Functional-Bot
 
 
 - Du hast Langeweile, dann schreibe deinen MOB an und er hilft dir die Zeit zu vertreiben, indem er ein Spiel mit dir Spiel.
