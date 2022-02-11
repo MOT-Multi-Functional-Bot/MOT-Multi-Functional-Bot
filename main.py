@@ -2,9 +2,11 @@
 # pylint: disable=C0116,W0613
 
 import requests
+from Games.wordle import *
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from conf import API_KEY
+
 
 # Define a few command handlers. These usually take the two arguments update and
 # context.
@@ -55,6 +57,14 @@ def cat(update: Update, context: CallbackContext) -> None:
     url = get_url()
     update.message.reply_photo(url)
 
+def wordle(update: Update, context:CallbackContext) -> None:
+    """Play the wordle game"""
+    log_input(update)
+    print("Try executing worlde Game")
+    wordle_game()
+    
+
+
 
 def main() -> None:
     """Start the bot."""
@@ -69,6 +79,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("nudel", nudel))
     dispatcher.add_handler(CommandHandler("cat", cat))
+    dispatcher.add_handler(CommandHandler("wordle", wordle))
 
     # on non command i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(
