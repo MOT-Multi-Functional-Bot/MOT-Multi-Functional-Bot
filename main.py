@@ -60,6 +60,7 @@ def cat(update: Update, context: CallbackContext) -> None:
 def wordle(update: Update, context:CallbackContext) -> None:
     """Play the wordle game"""
     log_input(update)
+    update.message.reply_text("Now you are playing Wordle\ntype in a Word with 5 letters:")
     print("Try executing worlde Game")
     wordle_game()
     
