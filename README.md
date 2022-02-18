@@ -6,3 +6,11 @@
 - In addition, he can tell you a lot of information or pictures about different things to pass the time
 - The focus is on a working mini-game, playable in Telegram with the bot. After that more modules (games or random facts) are planned.
 
+```mermaid
+ 
+ flowchart TD
+    A[Telegram] --> B{Du kennst den MOT?};
+    B --Ja--> C[Gut];
+    B -- Nein --> D[Dann such nach Ihm auf Telegram];
+    
+```
