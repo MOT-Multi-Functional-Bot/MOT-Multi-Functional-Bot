@@ -4,14 +4,14 @@ from random import choice
 def get_random_word():
     return choice(words)
 
+# source : https://gist.github.com/MarvinJWendt/2f4f4154b8ae218600eb091a5706b5f4
+# filtered all words with 5 letters
 
 words = [
     "aalen",
     "Aales",
     "aalst",
     "aalte",
-    "ÄAppO",
-    "Aarau",
     "Aaron",
     "Aasee",
     "Aases",
@@ -4240,7 +4240,6 @@ words = [
     "Notre",
     "Novum",
     "Nowak",
-    "NSDAP",
     "Nubuk",
     "Nudel",
     "Nugat",
@@ -6625,15 +6624,6 @@ words = [
     "Xetra",
     "Xhosa",
     "XHTML",
-    "XLIII",
-    "XLVII",
-    "XVIII",
-    "XXIII",
-    "XXVII",
-    "XXXII",
-    "XXXIV",
-    "XXXIX",
-    "XXXVI",
     "Xylit",
     "Xylol",
     "Yacht",
