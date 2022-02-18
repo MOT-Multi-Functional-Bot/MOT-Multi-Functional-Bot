@@ -1,7 +1,16 @@
 # MOT-Multi-Functional-Bot
 
 
-- Du hast Langeweile, dann schreibe deinen MOT an und er hilft dir die Zeit zu vertreiben, indem er ein Spiel mit dir spielt.
-- Optional erweiterbar mit weiteren Spielen und Möglichkeiten zur Zeitvertreibung
-- Zudem kann er dir zum Zeitvertreib viele Informationen oder Bilder über die unterschiedlichsten Dinge mitteilen
-- Der Fokus liegt auf einem funktionierenden Minispiel, spielbar in Telegram mit dem Bot. Anschließend sind weitere Module (Spiele oder Random-Facts) in der Planung.
+- You are bored, then write to your MOT and he will help you pass the time by playing a game with you.
+- Optionally expandable with more games and ways to pass the time.
+- In addition, he can tell you a lot of information or pictures about different things to pass the time
+- The focus is on a working mini-game, playable in Telegram with the bot. After that more modules (games or random facts) are planned.
+
+```mermaid
+ 
+ flowchart TD
+    A[Telegram] --> B{Du kennst den MOT?};
+    B --Ja--> C[Gut];
+    B -- Nein --> D[Dann such nach Ihm auf Telegram];
+    
+```

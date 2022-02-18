@@ -1,70 +1,15 @@
 #!/usr/bin/env python
-# pylint: disable=C0116,W0613
 
 import requests
-from Games.wordle import *
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from conf import API_KEY
+from main_commands import start, help_command, nudel, cat, echo
+from wordle_commands import wordle, guess
 
 
 # Define a few command handlers. These usually take the two arguments update and
 # context.
-
-
-def start(update: Update, context: CallbackContext) -> None:
-    """Send a message when the command /start is issued."""
-    user = update.effective_user
-    update.message.reply_markdown_v2(
-        fr'Hi {user.mention_markdown_v2()}\!',
-        reply_markup=ForceReply(selective=True),
-    )
-
-
-def log_input(update):
-    print(str(update.message.chat_id) + " entered: " + update.message.text)
-
-
-def help_command(update: Update, context: CallbackContext) -> None:
-    """Send a message when the command /help is issued."""
-    log_input(update)
-    update.message.reply_text('HELP YOURSELVES!!eleven11!!')
-
-
-def get_url():
-    """"Get a random cat"""
-    contents = requests.get('https://cataas.com/cat?json=true').json()
-    url = contents['url']
-    return "https://cataas.com/"+url
-
-
-def echo(update: Update, context: CallbackContext) -> None:
-    """Echo the user message."""
-    log_input(update)
-    update.message.reply_text(update.message.text+" ?")
-
-
-def nudel(update: Update, context: CallbackContext) -> None:
-    """Spam back at the user."""
-    log_input(update)
-    for i in range(10):
-        update.message.reply_text("🍜🍜NUDELATTACKE!!!!!🍜🍜")
-
-
-def cat(update: Update, context: CallbackContext) -> None:
-    """Send cat pic."""
-    log_input(update)
-    url = get_url()
-    update.message.reply_photo(url)
-
-def wordle(update: Update, context:CallbackContext) -> None:
-    """Play the wordle game"""
-    log_input(update)
-    update.message.reply_text("Now you are playing Wordle\ntype in a Word with 5 letters:")
-    print("Try executing worlde Game")
-    wordle_game()
-    
-
 
 
 def main() -> None:
@@ -81,6 +26,8 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("nudel", nudel))
     dispatcher.add_handler(CommandHandler("cat", cat))
     dispatcher.add_handler(CommandHandler("wordle", wordle))
+    dispatcher.add_handler(CommandHandler("guess", guess))
+
 
     # on non command i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(
