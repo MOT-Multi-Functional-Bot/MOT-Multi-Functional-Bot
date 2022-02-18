@@ -6,6 +6,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 from conf import API_KEY
 from main_commands import start, help_command, nudel, cat, echo
 from wordle_commands import wordle, guess
+from TicTacToe.TicTacToe_commands import *
 
 
 # Define a few command handlers. These usually take the two arguments update and
@@ -27,6 +28,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("cat", cat))
     dispatcher.add_handler(CommandHandler("wordle", wordle))
     dispatcher.add_handler(CommandHandler("guess", guess))
+    dispatcher.add_handler(CommandHandler("tic", TicTacToe_main))
 
 
     # on non command i.e message - echo the message on Telegram

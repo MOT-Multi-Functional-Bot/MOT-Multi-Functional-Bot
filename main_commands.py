@@ -1,6 +1,7 @@
 import requests
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CallbackContext
+from TicTacToe.TicTacToe_commands import *
 
 def log_input(update):
     print(str(update.message.chat_id) + " entered: " + update.message.text)
@@ -36,7 +37,8 @@ def nudel(update: Update, context: CallbackContext) -> None:
     """Spam back at the user."""
     log_input(update)
     for i in range(10):
-        update.message.reply_text("🍜🍜NUDELATTACKE!!!!!🍜🍜")
+        from telegram import Update, ForceReply
+from telegram.ext import Updater
 
 
 def cat(update: Update, context: CallbackContext) -> None:
@@ -45,3 +47,6 @@ def cat(update: Update, context: CallbackContext) -> None:
     url = get_url()
     update.message.reply_photo(url)
 
+def tic(update: Update, context: CallbackContext) -> None:
+    log_input(update)
+    TicTacToe_main()
