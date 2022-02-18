@@ -6,13 +6,23 @@
 - In addition, he can tell you a lot of information or pictures about different things to pass the time
 - The focus is on a working mini-game, playable in Telegram with the bot. After that more modules (games or random facts) are planned.
 
+## Project history
+
 ```mermaid
  
  flowchart TD
-    A[MOT] --> B{What can the MOT do?};
-    B -- In Progress --> E[Bigger Smaller Numbers Game];
-    B -- In Progress --> F[Movies guessing with emojis];
-    B -- In Progress --> G[Wordle];
-    B -- In Progress --> H[TicTacToe];
+    A[MOT Idea] --> B{What programming language?};
+    B -- Deno --> C[Telegram libraries not good enough];
+    B -- Python --> D[Good Telegram Libraries];
+    D --> E[Large community];
+    E --> F[Good for calculation ];
+    F --> G{What should the MOT do?};
+    G -- Problems --> H[Bug];
+    H --> I[Block commands in a Telegrambot];
+    I --> J[Asked question on Stack Overflow];
+    G -- In Progress --> K[Bigger Smaller Numbers Game];
+    G -- In Progress --> L[Movies guessing with emojis];
+    G -- In Progress --> M[Wordle];
+    G -- In Progress --> N[TicTacToe];
     
 ```
