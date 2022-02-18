@@ -9,8 +9,10 @@
 ```mermaid
  
  flowchart TD
-    A[Telegram] --> B{Du kennst den MOT?};
-    B --Ja--> C[Gut];
-    B -- Nein --> D[Dann such nach Ihm auf Telegram];
+    A[MOT] --> B{What can the MOT do?};
+    B -- In Progress --> E[Bigger Smaller Numbers Game];
+    B -- In Progress --> F[Movies guessing with emojis];
+    B -- In Progress --> G[Wordle];
+    B -- In Progress --> H[TicTacToe];
     
 ```
