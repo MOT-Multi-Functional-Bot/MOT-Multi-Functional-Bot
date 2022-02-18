@@ -5357,6 +5357,7 @@ words = [
     "Sexte",
     "Sexus",
     "Shake",
+    "Shark",
     "Sharp",
     "Shaws",
     "Shell",
