@@ -5,10 +5,11 @@ from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from conf import API_KEY
 from main_commands import start, help_command, nudel, cat, echo
-from wordle_commands import wordle, guess
+from wordle.wordle_commands import wordle, guess
 
 # Define a few command handlers. These usually take the two arguments update and
 # context.
+
 
 def main() -> None:
     """Start the bot."""
@@ -27,8 +28,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("guess", guess))
 
     # on non command i.e message - echo the message on Telegram
-    dispatcher.add_handler(MessageHandler(
-        Filters.text & ~Filters.command, echo))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
     # Start the Bot
     updater.start_polling()
@@ -39,5 +39,5 @@ def main() -> None:
     updater.idle()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
