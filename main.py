@@ -6,7 +6,7 @@ from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, Callb
 from conf import API_KEY
 from main_commands import start, help_command, nudel, cat, echo
 #from wordle_commands import wordle, guess
-from MovieGame.moviegame import movieGuessingGame, playMode
+from MovieGame.moviegame import *
 
 # Define a few command handlers. These usually take the two arguments update and
 # context.
@@ -24,7 +24,8 @@ def main() -> None:
         entry_points=[CommandHandler("MovieGuessingGame", movieGuessingGame)],
         states={
             PLAYMODE: [MessageHandler(Filters.regex('^(Easy|Hard)$'), playMode)]
-        }
+        },
+        fallbacks=[CommandHandler("stopgame", stopgame)]
     )
 
     # on different commands - answer in Telegram
