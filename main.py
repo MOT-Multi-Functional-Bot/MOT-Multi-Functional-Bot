@@ -1,14 +1,7 @@
-#!/usr/bin/env python
-
-import requests
-from telegram import Update, ForceReply
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from conf import API_KEY
 from main_commands import start, help_command, nudel, cat, echo
 from wordle.wordle_commands import wordle, guess
-
-# Define a few command handlers. These usually take the two arguments update and
-# context.
 
 
 def main() -> None:
@@ -19,11 +12,13 @@ def main() -> None:
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
 
-    # on different commands - answer in Telegram
+    # Main Commands
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("nudel", nudel))
     dispatcher.add_handler(CommandHandler("cat", cat))
+
+    # Wordle Commands
     dispatcher.add_handler(CommandHandler("wordle", wordle))
     dispatcher.add_handler(CommandHandler("guess", guess))
 

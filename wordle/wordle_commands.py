@@ -1,16 +1,15 @@
-from telegram import Update, ForceReply
-from telegram.ext import Updater, CallbackContext
-
-
-def log_input(update):
-    print(str(update.message.chat_id) + " entered: " + update.message.text)
+from telegram import Update
+from telegram.ext import CallbackContext
+from main_commands import log_input
 
 
 def wordle(update: Update, context: CallbackContext) -> None:
-    """Play the wordle game"""
+    """Start the game"""
     log_input(update)
-    update.message.reply_text("Guess words by using /guess 'word'")
+    update.message.reply_text("The Game has started! You can now use /guess start guessing!")
 
 
 def guess(update: Update, context: CallbackContext) -> None:
-    pass
+    """Catch the user's guess"""
+    log_input(update)
+    update.message.reply_text("User Input: " + update.message.text)
