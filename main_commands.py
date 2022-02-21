@@ -29,6 +29,7 @@ def get_url():
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
+    global TicTacToeMultiplayer
     log_input(update)
     update.message.reply_text(update.message.text+" ?")
 
@@ -37,8 +38,7 @@ def nudel(update: Update, context: CallbackContext) -> None:
     """Spam back at the user."""
     log_input(update)
     for i in range(10):
-        from telegram import Update, ForceReply
-from telegram.ext import Updater
+        update.message.reply_text("🍜🍜NUDELATTACKE!!!!!🍜🍜")
 
 
 def cat(update: Update, context: CallbackContext) -> None:
@@ -50,3 +50,4 @@ def cat(update: Update, context: CallbackContext) -> None:
 def tic(update: Update, context: CallbackContext) -> None:
     log_input(update)
     TicTacToe_main()
+
