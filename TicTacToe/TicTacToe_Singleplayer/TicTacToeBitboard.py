@@ -1,7 +1,4 @@
 #!/usr/bin/env python
-
-
-import ipycanvas as cnv
 from IPython.display import display, display_svg
 
 
@@ -17,9 +14,9 @@ def set_bits(Bits):
         result |= 1 << b
     return result
 
+
 def set_bit(n):
     return 1 << n
-
 
 
 def to_board(state):
@@ -55,6 +52,7 @@ def next_states(state, player):
         Result.append(next_state)
     return Result
 
+
 gAllLines = [set_bits([0, 1, 2]),
              set_bits([3, 4, 5]),
              set_bits([6, 7, 8]),
@@ -64,7 +62,7 @@ gAllLines = [set_bits([0, 1, 2]),
              set_bits([0, 4, 8]),
              set_bits([2, 4, 6]),
              ]
-             
+
 
 def utility(state):
     for mask in gAllLines:
@@ -79,10 +77,8 @@ def utility(state):
     return 0
 
 
-
 def finished(state):
     return utility(state) != None
-
 
 
 def get_move(state):
@@ -112,7 +108,6 @@ def final_msg(state):
 
 
 size = 150
-
 
 
 def get_symbol(state, row, col):

@@ -49,5 +49,5 @@ def cat(update: Update, context: CallbackContext) -> None:
 
 def tic(update: Update, context: CallbackContext) -> None:
     log_input(update)
-    TicTacToe_main()
+    TicTacToe_Multiplayer()
 

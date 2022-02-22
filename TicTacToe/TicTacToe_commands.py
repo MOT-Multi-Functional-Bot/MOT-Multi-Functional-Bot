@@ -1,11 +1,12 @@
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CallbackContext
-from TicTacToe.ticTac import game
+import TicTacToe.TicTacToe_Multiplayer.TicTacToeMultiplayer
+import TicTacToe.TicTacToe_Singleplayer.AlphaBetaPruningMemoization
 
 def log_input(update):
     print(str(update.message.chat_id) + " entered: " + update.message.text)
 
-def TicTacToe_main(update: Update, context:CallbackContext) -> None:
+def TicTacToe_Multiplayer(update: Update, context:CallbackContext) -> None:
     update.message.reply_text("You are trying to play TicTacToe!")
     Board   =  {'0': ' ' , '1': ' ' , '2': ' ' ,
             '3': ' ' , '4': ' ' , '5': ' ' ,
@@ -18,6 +19,8 @@ def TicTacToe_main(update: Update, context:CallbackContext) -> None:
 
 
     
-    game(Board, board_keys, update, CallbackContext)
+    TicTacToe.TicTacToe_Multiplayer.TicTacToeMultiplayer.main(Board, board_keys, update, CallbackContext)
 
+def TicTacToe_Single(update: Update, context: CallbackContext) -> None:
+    TicTacToe.TicTacToe_Singleplayer.AlphaBetaPruningMemoization.main(0)
 

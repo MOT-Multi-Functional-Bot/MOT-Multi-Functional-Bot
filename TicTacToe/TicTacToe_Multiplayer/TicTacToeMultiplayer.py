@@ -6,7 +6,7 @@ def printBoard(board, update, CallbackContext):
     
 
 # Now we'll write the main function which has all the gameplay functionality.
-def game(Board, board_keys, update, CallbackContext):
+def main(Board, board_keys, update, CallbackContext):
 
     turn = 'X'
     count = 0
@@ -85,7 +85,7 @@ def game(Board, board_keys, update, CallbackContext):
         for key in board_keys:
             Board[key] = " "
 
-        game()
+        main()
 
 if __name__ == "__main__":
-    game(Board, board_keys, update, CallbackContext)
+    main(Board, board_keys, update, CallbackContext)

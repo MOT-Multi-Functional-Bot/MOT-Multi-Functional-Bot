@@ -1,14 +1,11 @@
 #!/usr/bin/env python
-
-
-import IPython.display
-from TicTacToeBitboard import *
+from TicTacToe.TicTacToe_Singleplayer.TicTacToeBitboard import *
 
 from IPython.core.display import HTML
 
 
 import random
-randomNumber = random.randint(1,99)
+randomNumber = random.randint(1, 99)
 random.seed(randomNumber)
 
 
@@ -85,10 +82,6 @@ def minValue(State, alpha, beta):
     return v
 
 
-
-len(gCache)
-
-
 def best_move(State):
     NS = next_states(State, gPlayers[0])
     bestValue = evaluate(State, maxValue, -1, 1)
@@ -97,7 +90,7 @@ def best_move(State):
     return bestValue, BestState
 
 
-def play_game(state):
+def main(state):
     State = gStart
     while (True):
         val, State = best_move(State)
@@ -110,8 +103,11 @@ def play_game(state):
         if finished(State):
             final_msg(State)
             break
+    
 
 
-draw(gStart)
 
-play_game(gStart)
+
+if __name__ == '__main__':
+    print(gStart)
+    main(gStart)
