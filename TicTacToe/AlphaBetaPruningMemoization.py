@@ -5,11 +5,11 @@ import IPython.display
 from TicTacToeBitboard import *
 
 from IPython.core.display import HTML
-from IPython.display import display, display_svg
 
 
 import random
-random.seed(42)
+randomNumber = random.randint(1,99)
+random.seed(randomNumber)
 
 
 gCache = {}
@@ -86,10 +86,6 @@ def minValue(State, alpha, beta):
 
 
 
-
-v = evaluate(gStart, maxValue, -1, 1)
-
-
 len(gCache)
 
 
@@ -101,24 +97,21 @@ def best_move(State):
     return bestValue, BestState
 
 
-def play_game(canvas):
+def play_game(state):
     State = gStart
     while (True):
         val, State = best_move(State)
-        draw(State, canvas, f'For me, the game has the value {val}.')
+        draw(State)
         if finished(State):
             final_msg(State)
             break
-        IPython.display.clear_output(wait=True)
         State = get_move(State)
-        draw(State, canvas, '')
+        draw(State)
         if finished(State):
-            IPython.display.clear_output(wait=True)
             final_msg(State)
             break
 
 
-canvas = create_canvas()
-draw(gStart, canvas, f'Current value of game for "X": {v}')
+draw(gStart)
 
-play_game(canvas)
+play_game(gStart)

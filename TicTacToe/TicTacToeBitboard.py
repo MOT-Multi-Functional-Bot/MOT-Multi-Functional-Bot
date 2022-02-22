@@ -17,18 +17,9 @@ def set_bits(Bits):
         result |= 1 << b
     return result
 
-
-"{:b}".format(set_bits([0, 1, 4]))
-
-
-assert set_bits([0, 1, 4]) == 2**0 + 2**1 + 2**4
-
-
 def set_bit(n):
     return 1 << n
 
-
-assert set_bit(7) == 2 ** 7
 
 
 def to_board(state):
@@ -45,9 +36,6 @@ def to_board(state):
     return result
 
 
-#print(to_board(set_bits([0, 2, 3, 5, 7, 9+1, 9+4, 9+6])))
-
-
 def empty(state):
     Free = {n for n in range(9)}
     Free -= {n for n in range(9) if state & (1 << n) != 0}
@@ -56,7 +44,6 @@ def empty(state):
 
 
 state = set_bits([2, 3, 5, 9+1, 9+4, 9+8])
-# print(to_board(state))
 empty(state)
 
 
@@ -68,14 +55,6 @@ def next_states(state, player):
         Result.append(next_state)
     return Result
 
-
-state = set_bits([2, 3, 5, 10, 13, 15])
-# print(f'state:\n{to_board(state)}')
-#print('next states:')
-# for s in next_states(state, 0):
-# print(to_board(s))
-
-
 gAllLines = [set_bits([0, 1, 2]),
              set_bits([3, 4, 5]),
              set_bits([6, 7, 8]),
@@ -85,11 +64,7 @@ gAllLines = [set_bits([0, 1, 2]),
              set_bits([0, 4, 8]),
              set_bits([2, 4, 6]),
              ]
-
-
-# for state in gAllLines:
-# print(to_board(state))
-
+             
 
 def utility(state):
     for mask in gAllLines:
@@ -139,11 +114,6 @@ def final_msg(state):
 size = 150
 
 
-def create_canvas():
-    canvas = cnv.Canvas(size=(size * 3, size * 3 + 50))
-    display(canvas)
-    return canvas
-
 
 def get_symbol(state, row, col):
     mask = set_bit(row * 3 + col)
@@ -154,40 +124,5 @@ def get_symbol(state, row, col):
     return ' '
 
 
-def draw(state, canvas, value):
-    canvas.clear()
-    n = 3
-    canvas.font = '45px sans-serif'
-    canvas.text_align = 'center'
-    canvas.text_baseline = 'middle'
-    for row in range(n):
-        for col in range(n):
-            x = col * size
-            y = row * size
-            canvas.line_width = 1.0
-            canvas.stroke_rect(x, y, size, size)
-            symbol = get_symbol(state, row, col)
-            if symbol != ' ':
-                x += size // 2
-                y += size // 2
-                if symbol == 'X':
-                    canvas.fill_style = 'red'
-                else:
-                    canvas.fill_style = 'blue'
-                canvas.fill_text(symbol, x, y)
-    canvas.font = '12px sans-serif'
-    canvas.fill_style = 'green'
-    for row in range(n):
-        for col in range(n):
-            x = col * size + 16
-            y = row * size + 141
-            canvas.fill_text(f'({row}, {col})', x, y)
-    canvas.font = '16px sans-serif'
-    canvas.fill_style = 'black'
-    x = 1.5 * size
-    y = 3.2 * size
-    canvas.fill_text(str(value), x, y)
-
-
-#draw(set_bits([0, 2, 5, 6, 1+9, 3+9, 4+9]), create_canvas(), -1)
-# print(type(create_canvas()))
+def draw(state):
+    print(to_board(state))
