@@ -24,5 +24,7 @@
     G -- In Progress --> L[Movies guessing with emojis];
     G -- In Progress --> M[Wordle];
     G -- In Progress --> N[TicTacToe];
+    N --> O[Multiplayer version runs];
+    O --> PT[Singleplayer version runs];
     
 ```
