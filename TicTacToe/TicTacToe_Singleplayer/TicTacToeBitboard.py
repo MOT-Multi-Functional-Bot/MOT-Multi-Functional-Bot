@@ -20,16 +20,16 @@ def set_bit(n):
 
 
 def to_board(state):
-    result = '+-+-+-+\n'
+    result = ''
     for cell in range(9):
         if state & (2 ** cell) != 0:
-            result += '|X'
+            result += '✖'
         elif state & (2 ** (cell + 9)) != 0:
-            result += '|O'
+            result += '⭕'
         else:
-            result += '| '
+            result += '⬜'
         if (cell + 1) % 3 == 0:
-            result += '|\n+-+-+-+\n'
+            result += '\n'
     return result
 
 
@@ -81,28 +81,29 @@ def finished(state):
     return utility(state) != None
 
 
-def get_move(state):
+def get_move(state, update):
     while True:
         try:
-            row, col = input('Enter move here: ').split(',')
+            row, col = input('Move einfeben bitte: ').split(',')
             row, col = int(row), int(col)
             mask = set_bit(9 + row * 3 + col)
             if state & mask == 0:
                 return state | mask
-            print("Don't cheat! Please try again.")
+            update.message.reply_text("Nicht cheaten.")
         except:
-            print('Illegal input.')
-            print('row and col are numbers from the set {0,1,2}.')
+            update.message.reply_text('Illegaler Input.')
+            update.message.reply_text(
+                'Reihen und Zeilen sind Elemente aus: {0,1,2}.')
 
 
-def final_msg(state):
+def final_msg(state, update):
     if finished(state):
         if utility(state) == -1:
-            print('You have won!')
+            update.message.reply_text('Du hast gewonnen!')
         elif utility(state) == 1:
-            print('The computer has won!')
+            update.message.reply_text('Der Computer hat gewonnen')
         else:
-            print("It's a draw.")
+            update.message.reply_text("Unendschieden")
         return True
     return False
 
@@ -120,4 +121,6 @@ def get_symbol(state, row, col):
 
 
 def draw(state):
-    print(to_board(state))
+    x = to_board(state)
+    # print(x)
+    return x

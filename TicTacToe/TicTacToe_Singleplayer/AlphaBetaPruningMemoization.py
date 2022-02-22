@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 from TicTacToe.TicTacToe_Singleplayer.TicTacToeBitboard import *
-
 from IPython.core.display import HTML
+
 
 
 import random
@@ -90,18 +90,22 @@ def best_move(State):
     return bestValue, BestState
 
 
-def main(state):
+def main(state, update, context) -> None:
     State = gStart
     while (True):
         val, State = best_move(State)
-        draw(State)
+        x = draw(State)
+        #print(x)
+        update.message.reply_text(x)
         if finished(State):
-            final_msg(State)
+            final_msg(State, update)
             break
-        State = get_move(State)
-        draw(State)
+        State = get_move(State, update)
+        x = draw(State)
+        #print(x)
+        update.message.reply_text(x)
         if finished(State):
-            final_msg(State)
+            final_msg(State, update)
             break
     
 
@@ -110,4 +114,4 @@ def main(state):
 
 if __name__ == '__main__':
     print(gStart)
-    main(gStart)
+    main(gStart, update, CallbackContext)
