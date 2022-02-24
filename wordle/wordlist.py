@@ -1,10 +1,6 @@
 from random import choice
 
 
-def get_random_word():
-    return choice(Words.all_words)
-
-
 # source : https://gist.github.com/MarvinJWendt/2f4f4154b8ae218600eb091a5706b5f4
 # filtered all words with 5 letters
 
@@ -6833,3 +6829,11 @@ class Words:
         "zwölf",
         "zyste",
     ]
+
+
+def get_random_word() -> str:
+    return choice(Words.all_words)
+
+
+def check_if_word_exists(guess: str) -> bool:
+    return guess in Words.all_words
