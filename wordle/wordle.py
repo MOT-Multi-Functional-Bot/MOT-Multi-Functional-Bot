@@ -29,10 +29,10 @@ class wordle:
         msg += f"`{''.join(self.progress)}`"
         msg += "\n\n"
         msg += "Misplaced Letters:\n"
-        msg += " ".join(self.wrong_pos_letters)
+        msg += " ".join(sorted(self.wrong_pos_letters))
         msg += "\n\n"
         msg += "Wrong Letters:\n"
-        msg += " ".join(self.wrong_letters)
+        msg += " ".join(sorted(self.wrong_letters))
 
         # check if game is finished -> display remaining tries
         if not self.finished:
