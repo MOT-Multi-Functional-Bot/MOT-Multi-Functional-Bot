@@ -89,3 +89,19 @@ def guess(update: Update, context: CallbackContext) -> None:
         del running_games[update.effective_chat.id]
 
     game.update_message()
+
+
+# stop a running game
+def stop(update: Update, context: CallbackContext) -> None:
+    log_input(update)
+    global running_games
+
+    # check if there is an open game for the chat id
+    if check_game_status(update.effective_chat.id):
+        # remove chat id from running games
+        del running_games[update.effective_chat.id]
+        send_message(update, "Game stopped! Resume with /wordle!")
+        return
+
+    # gets sent, if no game is running
+    send_message(update, "There is no game running!")

@@ -1,6 +1,6 @@
-import requests
 from telegram import Update, ForceReply, Message
 from telegram.ext import CallbackContext
+import requests
 
 
 def log_input(update):

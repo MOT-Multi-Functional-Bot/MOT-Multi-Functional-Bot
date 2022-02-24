@@ -1,4 +1,4 @@
-from wordle.exceptions import GameOverEx, WinEx, LoseEx, GuessEx
+from wordle.exceptions import WinEx, LoseEx, GuessEx
 from wordle.wordlist import get_random_word, check_if_word_exists
 
 
