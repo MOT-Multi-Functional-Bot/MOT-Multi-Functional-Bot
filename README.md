@@ -8,7 +8,7 @@
 ## Project history
 
 ```mermaid
- 
+
  flowchart TD
     A[MOT Idea] --> B{What programming language?};
     B -- Deno --> C[Telegram libraries not good enough];
@@ -25,5 +25,5 @@
     G -- In Progress --> N[TicTacToe];
     N --> O[Multiplayer version runs];
     O --> PT[Singleplayer version runs];
-    
+
 ```

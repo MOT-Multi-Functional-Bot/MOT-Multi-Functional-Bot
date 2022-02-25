@@ -1,7 +1,7 @@
 from random import choice
 
 
-# sources : 
+# sources :
 # https://gist.github.com/MarvinJWendt/2f4f4154b8ae218600eb091a5706b5f4
 # https://github.com/enz/german-wordlist
 # https://github.com/Jonny-exe/German-Words-Library
