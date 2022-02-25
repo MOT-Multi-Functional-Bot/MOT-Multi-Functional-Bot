@@ -10,19 +10,10 @@ def log_input(update):
 
 def TicTacToe_Multiplayer(update: Update, context: CallbackContext) -> None:
     update.message.reply_text("You are trying to play TicTacToe Multiplayer!")
-    Board = {'0': ' ', '1': ' ', '2': ' ',
-             '3': ' ', '4': ' ', '5': ' ',
-             '6': ' ', '7': ' ', '8': ' '}
 
-    board_keys = []
-
-    for key in Board:
-        board_keys.append(key)
-
-    TicTacToe.TicTacToe_Multiplayer.TicTacToeMultiplayer.main(
-        Board, board_keys, update, CallbackContext)
+    TicTacToe.TicTacToe_Multiplayer.TicTacToeMultiplayer.main(update, CallbackContext)
 
 
 def TicTacToe_Single(update: Update, context: CallbackContext) -> None:
     update.message.reply_text("You are trying to play TicTacToe Singleplayer!")
-    TicTacToe.TicTacToe_Singleplayer.AlphaBetaPruningMemoization.main(0,  update, CallbackContext)
+    TicTacToe.TicTacToe_Singleplayer.TicTacToe.main(0,  update, CallbackContext)
