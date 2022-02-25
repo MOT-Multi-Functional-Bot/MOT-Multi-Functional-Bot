@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
-from logging import Filter
-import requests
-from telegram import Update, ForceReply
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
 from conf import API_KEY
 from main_commands import start, help_command, nudel, cat, echo
-#from wordle_commands import wordle, guess
+
+# from wordle_commands import wordle, guess
 from MovieGame.moviegame import *
 
 # Define a few command handlers. These usually take the two arguments update and
@@ -24,10 +22,10 @@ def main() -> None:
     movie_Guessing_Game = ConversationHandler(
         entry_points=[CommandHandler("MovieGuessingGame", movieGuessingGame)],
         states={
-            PLAYMODE: [MessageHandler(Filters.regex('^(Easy|Hard)$'), playMode)],
-            GUESS: [MessageHandler( Filters.regex('^[\w*\s]*$'), movieGuess)]
+            PLAYMODE: [MessageHandler(Filters.regex("^(Easy|Hard)$"), playMode)],
+            GUESS: [MessageHandler(Filters.regex("^[\w*\s]*$"), movieGuess)],
         },
-        fallbacks=[CommandHandler("stopgame", stopgame)]
+        fallbacks=[CommandHandler("stopgame", stopgame)],
     )
 
     # on different commands - answer in Telegram
@@ -35,14 +33,12 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("nudel", nudel))
     dispatcher.add_handler(CommandHandler("cat", cat))
-    #dispatcher.add_handler(CommandHandler("wordle", wordle))
-    #dispatcher.add_handler(CommandHandler("guess", guess))
+    # dispatcher.add_handler(CommandHandler("wordle", wordle))
+    # dispatcher.add_handler(CommandHandler("guess", guess))
     dispatcher.add_handler(movie_Guessing_Game)
 
-
     # on non command i.e message - echo the message on Telegram
-    dispatcher.add_handler(MessageHandler(
-        Filters.text & ~Filters.command, echo))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
     # Start the Bot
     updater.start_polling()
@@ -53,5 +49,5 @@ def main() -> None:
     updater.idle()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
