@@ -5,7 +5,6 @@ from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from conf import API_KEY
 from main_commands import start, help_command, nudel, cat, echo
-from wordle_commands import wordle, guess
 from TicTacToe.TicTacToe_commands import *
 
 
@@ -28,9 +27,8 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("cat", cat))
     
     # TicTacToe commands
-    dispatcher.add_handler(CommandHandler("multiTic", TicTacToe_Multiplayer))
-    dispatcher.add_handler(CommandHandler("tic", TicTacToe_Single))
-    #dispatcher.add_handler(CommandHandler("stop", stop))
+    dispatcher.add_handler(CommandHandler("tic", TicTacToe))
+    dispatcher.add_handler(CommandHandler("stop", stop))
     
 
 
