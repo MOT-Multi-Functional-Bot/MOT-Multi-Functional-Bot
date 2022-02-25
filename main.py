@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+from logging import Filter
 import requests
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext, ConversationHandler
@@ -23,7 +24,8 @@ def main() -> None:
     movie_Guessing_Game = ConversationHandler(
         entry_points=[CommandHandler("MovieGuessingGame", movieGuessingGame)],
         states={
-            PLAYMODE: [MessageHandler(Filters.regex('^(Easy|Hard)$'), playMode)]
+            PLAYMODE: [MessageHandler(Filters.regex('^(Easy|Hard)$'), playMode)],
+            GUESS: [MessageHandler( Filters.regex('^[\w*\s]*$'), movieGuess)]
         },
         fallbacks=[CommandHandler("stopgame", stopgame)]
     )
