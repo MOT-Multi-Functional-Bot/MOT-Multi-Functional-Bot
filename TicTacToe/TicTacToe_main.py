@@ -2,6 +2,12 @@
 import random
 from telegram import Update
 from main_commands import send_message
+from TicTacToe.exceptions import WinEx, LoseEx, GuessEx
+
+
+class Guess:
+    def __init__(self, input):
+        self.input
 
 class TicTacToe_Game:
 
@@ -23,6 +29,45 @@ class TicTacToe_Game:
                 self.set_bits([0, 4, 8]),
                 self.set_bits([2, 4, 6]),
                 ]
+
+
+
+    def guess(self, guess: str) -> Guess:
+        # check if player input has the correct length
+        if len(guess) != 5:
+            raise GuessEx("The guesses word has the wrong amount of letters!")
+
+        # check if player word exists in our wordlist
+        
+
+        # if word passes the tests above, count the try
+        self.tries -= 1
+
+        # get the formatted guess
+        guess_corrected = self.solve_guess(guess)
+
+        # check if the guess is correct; set all letters to correct if true
+        is_guess_correct = guess_corrected == 5 * "🟩"
+
+        # check if guess is correct
+        if is_guess_correct:
+            # set finish variable
+            self.finished = True
+            # raise exception to end the game
+            raise WinEx(f"You have successfully guess the word {self.selected_word}!")
+
+        # check if there are tries left
+        if self.tries == 0:
+            # set finish variables and raise exception to end the game
+            self.finished = True
+            # set tries to signal a lose
+            self.tries = -1
+            raise LoseEx(f"No more tries left. Your word was {self.selected_word}!")
+
+        # return the guess from the player, formatted_word and a bool if the guess was correct
+        return Guess(guess, guess_corrected, is_guess_correct)
+
+
 
 
     def set_bits(self, Bits):
@@ -56,9 +101,6 @@ class TicTacToe_Game:
         Free -= {n for n in range(9) if state & (1 << (9 + n)) != 0}
         return Free
 
-
-
-
     def next_states(self, state, player):
         Empty = self.empty(state)
         Result = []
@@ -66,9 +108,6 @@ class TicTacToe_Game:
             next_state = state | self.set_bit(player * 9 + n)
             Result.append(next_state)
         return Result
-
-
-    
 
 
     def utility(self, state):

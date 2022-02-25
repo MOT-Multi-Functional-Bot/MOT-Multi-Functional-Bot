@@ -3,6 +3,7 @@ from telegram import Update
 from zmq import Message
 from telegram.ext import CallbackContext
 from TicTacToe.TicTacToe_main import TicTacToe_Game
+from TicTacToe.exceptions import GameOverEx, GuessEx
 
 
 
@@ -64,6 +65,43 @@ def stop(update: Update, context: CallbackContext) -> None:
     # gets sent, if no game is running
     send_message(update, "Aktuell läuft noch kein Spiel!")
 
+
+def guess(update: Update, context: CallbackContext) -> None:
+    log_input(update)
+    global running_games
+
+    # Check if a game is running
+    if not check_game_status(update.effective_chat.id):
+        send_message(update, "Start a game with /wordle")
+        return
+
+    # get player input
+    player_input = " ".join(context.args).upper()
+
+    if player_input == "":
+        send_message(update, "Guess a word by using /guess 'word'")
+        return
+
+    # get game info of playing player
+    game = running_games[update.effective_chat.id]
+
+    # run guess
+    try:
+        game.guess(player_input)
+
+    # if error while guessing occurs display the error message to player
+    except GuessEx as e:
+        game.err_msg = str(e)
+
+    # if game is over display the message to player
+    except GameOverEx as e:
+        game.err_msg = str(e)
+        # Send Results to player
+        update.message.reply_text(game.results())
+        # delete running game from registry
+        del running_games[update.effective_chat.id]
+
+    game.update_message()
 
     #update.message.reply_text("You are trying to play TicTacToe Singleplayer!")
     #TicTacToe.TicTacToe_Singleplayer.TicTacToe.main(0,  update, CallbackContext)

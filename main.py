@@ -27,6 +27,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("cat", cat))
     
     # TicTacToe commands
+    dispatcher.add_handler(CommandHandler("guess", guess))
     dispatcher.add_handler(CommandHandler("tic", TicTacToe))
     dispatcher.add_handler(CommandHandler("stop", stop))
     
