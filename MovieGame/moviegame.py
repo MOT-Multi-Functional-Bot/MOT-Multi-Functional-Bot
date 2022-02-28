@@ -21,16 +21,19 @@ def playMode(update: Update, context: CallbackContext) -> int:
     false1 = random.randint(0,len(questions))
     false2 = random.randint(0,len(questions))
     false3 = random.randint(0,len(questions))
+    global playmodus
+    global answer
+    answer = questions[quiz][1]
     update.message.reply_text("You chose" + update.message.text +"mode")
     if update.message.text == "Easy":
-        global playmodus
         playmodus = "Easy"
         update.message.reply_text("Easy Peasy Lemon Squeezy")
-        global answer
-        answer = questions[quiz][1]
         reply_keyboard = [[answer , questions[false1][1], questions[false2][1], questions[false3][1]]]
         update.message.reply_text("The movie you need to guess is:" + questions[quiz][0] , reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard = True, input_field_placeholder = "A, B, C oder D?"),)
-        
+    else:
+        playmodus = "Hard"
+        update.message.reply_text("Wow! Viel Glück!")
+        update.message.reply_text("The movie you need to guess is:" + questions[quiz][0])
     return GUESS
 
 def movieGuess(update: Update, context: CallbackContext) -> None:
@@ -40,7 +43,24 @@ def movieGuess(update: Update, context: CallbackContext) -> None:
             update.message.reply_text("Verdammt, knapp daneben, die richtige Antwort wäre " + answer)
         else:
             update.message.reply_text("Herzlichen Glückwunsch! Du hast gewonnen!")
-    return ConversationHandler.END
+        return ConversationHandler.END
+    elif playmodus == "Hard":
+        guesscounter = 0
+        if update.message.text.casefold() == answer.casefold():
+            update.message.reply_text("Herzlichen Glückwunsch! Du hast gewonnen!")
+            return ConversationHandler.END
+        
+        elif update.message.text != answer:
+            guesscounter += 1
+            if guesscounter < 5:
+                update.message.reply_text("Das ist leider nicht richtig du hast noch " + str(5-guesscounter) + " Versuche!")
+                return GUESS
+            else:
+                update.message.reply_text("Du hast leider verloren! Die richtige Antwort wäre " + answer + " gewesen.")
+                return ConversationHandler.END
+        
+
+    
 
 
 def stopgame(update: Update, context: CallbackContext) -> int:
