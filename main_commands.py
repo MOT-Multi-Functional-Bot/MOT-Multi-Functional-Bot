@@ -1,6 +1,6 @@
 import requests
 from telegram import Update, ForceReply
-from telegram.ext import Updater, CallbackContext
+from telegram.ext import CallbackContext
 
 def log_input(update):
     print(str(update.message.chat_id) + " entered: " + update.message.text)
