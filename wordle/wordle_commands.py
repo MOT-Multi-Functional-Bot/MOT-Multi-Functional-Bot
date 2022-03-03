@@ -1,3 +1,4 @@
+import json
 from main_commands import log_input, send_message
 from telegram import Message, Update
 from telegram.ext import CallbackContext
@@ -105,3 +106,36 @@ def stop(update: Update, context: CallbackContext) -> None:
 
     # gets sent, if no game is running
     send_message(update, "There is no game running!")
+
+
+def stats(update: Update, context: CallbackContext) -> None:
+    log_input(update)
+    userid = str(update.message.chat_id)
+    user = update.effective_user
+    f = open("wordle\stats.json")
+    data = json.load(f)
+    games_played = data[userid]["games_played"]
+    games_lost = data[userid]["games_lost"]
+    games_won = games_played - games_lost
+    guesses_1 = data[userid]["guesses_1"]
+    guesses_2 = data[userid]["guesses_2"]
+    guesses_3 = data[userid]["guesses_3"]
+    guesses_4 = data[userid]["guesses_4"]
+    guesses_5 = data[userid]["guesses_5"]
+    guesses_6 = data[userid]["guesses_6"]
+    total_guesses = (
+        guesses_1
+        + guesses_2 * 2
+        + guesses_3 * 3
+        + guesses_4 * 4
+        + guesses_5 * 5
+        + guesses_6 * 6
+    )
+    avg_guesses = round(total_guesses / games_played, 2)
+    stat_msg = f"Stats for {user['username']}:\n\n"
+    stat_msg += f"Games Played: {games_played} \n"
+    stat_msg += f"Games Won: {games_won} \n"
+    stat_msg += f"Games Lost: {games_lost} \n"
+    stat_msg += f"Perfect Games: {guesses_1} \n"
+    stat_msg += f"Average Guesses needed: {avg_guesses} \n"
+    send_message(update, stat_msg)
