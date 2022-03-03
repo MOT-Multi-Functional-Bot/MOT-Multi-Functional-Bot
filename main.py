@@ -1,7 +1,7 @@
 from conf import API_KEY
 from main_commands import start, help_command, nudel, cat, echo
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from wordle.wordle_commands import wordle, guess, stop
+from wordle.wordle_commands import wordle, guess, stop, stats
 
 
 def main() -> None:
@@ -22,6 +22,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("guess", guess))
     dispatcher.add_handler(CommandHandler("stop", stop))
     dispatcher.add_handler(CommandHandler("wordle", wordle))
+    dispatcher.add_handler(CommandHandler("stats", stats))
 
     # on non command i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
