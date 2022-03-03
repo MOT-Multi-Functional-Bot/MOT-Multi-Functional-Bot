@@ -110,10 +110,16 @@ def stop(update: Update, context: CallbackContext) -> None:
 
 def stats(update: Update, context: CallbackContext) -> None:
     log_input(update)
+    try:
+        f = open("wordle\stats.json")
+        data = json.load(f)
+    except FileNotFoundError:
+        print("Stats file count not be found!")
+        send_message(update, "There was an error accessing your stats!")
+    finally:
+        f.close()
     userid = str(update.message.chat_id)
     user = update.effective_user
-    f = open("wordle\stats.json")
-    data = json.load(f)
     games_played = data[userid]["games_played"]
     games_lost = data[userid]["games_lost"]
     games_won = games_played - games_lost
