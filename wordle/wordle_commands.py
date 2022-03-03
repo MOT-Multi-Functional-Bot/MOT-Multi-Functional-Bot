@@ -74,8 +74,9 @@ def guess(update: Update, context: CallbackContext) -> None:
     game = running_games[update.effective_chat.id]
 
     # run guess
+    userid = str(update.message.chat_id)
     try:
-        game.guess(player_input)
+        game.guess(player_input, userid)
 
     # if error while guessing occurs display the error message to player
     except GuessEx as e:
@@ -110,35 +111,40 @@ def stop(update: Update, context: CallbackContext) -> None:
 
 def stats(update: Update, context: CallbackContext) -> None:
     log_input(update)
+    # check if stats file exists, load json stats if it they exist
     try:
         f = open("wordle\stats.json")
         data = json.load(f)
+    # if file does not exist, throw error
     except FileNotFoundError:
         print("Stats file count not be found!")
         send_message(update, "There was an error accessing your stats!")
     finally:
         f.close()
+    # get userid from update
     userid = str(update.message.chat_id)
     user = update.effective_user
+    # check if user exists in the stats data
     if userid in data:
+        # extract user specific data
         games_played = data[userid]["games_played"]
         games_lost = data[userid]["games_lost"]
-        games_won = games_played - games_lost
+        games_won = data[userid]["games_won"]
         guesses_1 = data[userid]["guesses_1"]
         guesses_2 = data[userid]["guesses_2"]
         guesses_3 = data[userid]["guesses_3"]
         guesses_4 = data[userid]["guesses_4"]
         guesses_5 = data[userid]["guesses_5"]
-        guesses_6 = data[userid]["guesses_6"]
+        # Sum all guesses with their corresponding factor
         total_guesses = (
-            guesses_1
-            + guesses_2 * 2
-            + guesses_3 * 3
-            + guesses_4 * 4
-            + guesses_5 * 5
-            + guesses_6 * 6
+            guesses_1 + guesses_2 * 2 + guesses_3 * 3 + guesses_4 * 4 + guesses_5 * 5
         )
-        avg_guesses = round(total_guesses / games_played, 2)
+        # calculate the average amount of guesses a user needed, and round it to 2 decimal places
+        if games_won > 0:
+            avg_guesses = round(total_guesses / games_won, 2)
+        else:
+            avg_guesses = 0
+        # Build stat message
         stat_msg = f"Stats for {user['username']}:\n\n"
         stat_msg += f"Games Played: {games_played} \n"
         stat_msg += f"Games Won: {games_won} \n"

@@ -1,3 +1,4 @@
+import json
 from wordle.exceptions import WinEx, LoseEx, GuessEx
 from wordle.wordlist import get_random_word, check_if_word_exists
 
@@ -93,7 +94,7 @@ class wordle:
         # return the guess formatted for the ui
         return formatted_word
 
-    def guess(self, guess: str) -> Guess:
+    def guess(self, guess: str, userid: str) -> Guess:
         # check if player input has the correct length
         if len(guess) != 5:
             raise GuessEx("The guesses word has the wrong amount of letters!")
@@ -116,12 +117,18 @@ class wordle:
             # set finish variable
             self.finished = True
             # raise exception to end the game
+
+            # Save stats
+            wordle.save_stats(self, userid)
+
             raise WinEx(f"You have successfully guess the word {self.selected_word}!")
 
         # check if there are tries left
         if self.tries == 0:
             # set finish variables and raise exception to end the game
             self.finished = True
+            # Save stats
+            wordle.save_stats(self, userid)
             # set tries to signal a lose
             self.tries = -1
             raise LoseEx(f"No more tries left. Your word was {self.selected_word}!")
@@ -144,3 +151,53 @@ class wordle:
         msg += "\n".join(guess.correction for guess in self.guesses)
 
         return msg
+
+    def save_stats(self, userid):
+        guesses_needed = 6 - self.tries
+        # check if file exists
+        try:
+            f = open("wordle\stats.json", "r")
+        # if file does not exist, create it
+        except FileNotFoundError:
+            print("Stats file count not be found, so it will be created!")
+            f = open("wordle\stats.json", "w+")
+            f.write("{}")
+            f.close()
+        # open stats file
+        try:
+            f = open("wordle\stats.json", "r")
+            data = json.load(f)
+            # create player if not existent
+            if userid not in data:
+                data[userid] = {}
+                data[userid]["games_played"] = 0
+                data[userid]["games_lost"] = 0
+                data[userid]["games_won"] = 0
+                data[userid]["guesses_1"] = 0
+                data[userid]["guesses_2"] = 0
+                data[userid]["guesses_3"] = 0
+                data[userid]["guesses_4"] = 0
+                data[userid]["guesses_5"] = 0
+            # update player stats
+            data[userid]["games_played"] += 1
+            if guesses_needed < 6:
+                data[userid]["games_won"] += 1
+            if guesses_needed == 1:
+                data[userid]["guesses_1"] += 1
+            elif guesses_needed == 2:
+                data[userid]["guesses_2"] += 1
+            elif guesses_needed == 3:
+                data[userid]["guesses_3"] += 1
+            elif guesses_needed == 4:
+                data[userid]["guesses_4"] += 1
+            elif guesses_needed == 5:
+                data[userid]["guesses_5"] += 1
+            elif guesses_needed == 6:
+                data[userid]["games_lost"] += 1
+        except FileNotFoundError:
+            print("Stats file count not be found!")
+        finally:
+            f.close()
+            # save data to file
+            with open("wordle\stats.json", "w", encoding="utf-8") as f:
+                json.dump(data, f, ensure_ascii=False, indent=4)
