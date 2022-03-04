@@ -1,14 +1,8 @@
-#!/usr/bin/env python
-
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
 from conf import API_KEY
-from main_commands import start, help_command, nudel, cat, echo
-
-# from wordle_commands import wordle, guess
+from main_commands import cat, echo, help, noodle, start
+from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
+from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
 from MovieGame.moviegame import *
-
-# Define a few command handlers. These usually take the two arguments update and
-# context.
 
 
 def main() -> None:
@@ -29,14 +23,23 @@ def main() -> None:
         fallbacks=[CommandHandler("stopgame", stopgame)],
     )
 
-    # on different commands - answer in Telegram
-    dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("help", help_command))
-    dispatcher.add_handler(CommandHandler("nudel", nudel))
+   
+    # Main Commands
     dispatcher.add_handler(CommandHandler("cat", cat))
+    dispatcher.add_handler(CommandHandler("help", help))
+    dispatcher.add_handler(CommandHandler("noodle", noodle))
+    dispatcher.add_handler(CommandHandler("start", start))
 
+    # Wordle Commands
+    dispatcher.add_handler(CommandHandler("guess", guess))
+    dispatcher.add_handler(CommandHandler("stop", stop))
+    dispatcher.add_handler(CommandHandler("wordle", wordle))
+    dispatcher.add_handler(CommandHandler("stats", stats))
+    dispatcher.add_handler(CommandHandler("howto", howto))
+    
     # MovieGuessingGame added Conversation_Handler
     dispatcher.add_handler(movie_Guessing_Game)
+
 
     # on non command i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
