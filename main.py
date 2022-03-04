@@ -1,7 +1,7 @@
 from conf import API_KEY
-from main_commands import start, help_command, nudel, cat, echo
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from wordle.wordle_commands import wordle, guess, stop, stats
+from main_commands import cat, echo, help, noodle, start
+from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
+from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
 
 
 def main() -> None:
@@ -14,8 +14,8 @@ def main() -> None:
 
     # Main Commands
     dispatcher.add_handler(CommandHandler("cat", cat))
-    dispatcher.add_handler(CommandHandler("help", help_command))
-    dispatcher.add_handler(CommandHandler("nudel", nudel))
+    dispatcher.add_handler(CommandHandler("help", help))
+    dispatcher.add_handler(CommandHandler("noodle", noodle))
     dispatcher.add_handler(CommandHandler("start", start))
 
     # Wordle Commands
@@ -23,6 +23,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("stop", stop))
     dispatcher.add_handler(CommandHandler("wordle", wordle))
     dispatcher.add_handler(CommandHandler("stats", stats))
+    dispatcher.add_handler(CommandHandler("howto", howto))
 
     # on non command i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
