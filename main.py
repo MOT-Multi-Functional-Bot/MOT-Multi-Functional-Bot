@@ -1,7 +1,7 @@
 from conf import API_KEY
 from main_commands import cat, echo, help, noodle, start
 from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
-from wordle.wordle_commands import guess, howto, stats, stop, wordle
+from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
 
 
 def main() -> None:
