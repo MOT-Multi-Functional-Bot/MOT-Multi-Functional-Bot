@@ -34,7 +34,7 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("nudel", nudel))
     dispatcher.add_handler(CommandHandler("cat", cat))
-    
+
     # MovieGuessingGame added Conversation_Handler
     dispatcher.add_handler(movie_Guessing_Game)
 

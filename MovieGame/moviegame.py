@@ -14,7 +14,9 @@ def movieGuessingGame(update: Update, context: CallbackContext) -> int:
     """Movie guessing Game"""
     log_input(update)
     if update.effective_chat.id in running_MovieGames.keys():
-        update.message.reply_text("There is already a game running, if you want to start a new game enter /stopgame and then /MovieGuessingGame.")
+        update.message.reply_text(
+            "There is already a game running, if you want to start a new game enter /stopgame and then /MovieGuessingGame."
+        )
     else:
         reply_keyboard = [["Easy", "Hard"]]
         update.message.reply_text(
@@ -27,6 +29,7 @@ def movieGuessingGame(update: Update, context: CallbackContext) -> int:
         )
         return PLAYMODE
 
+
 # playMode --> handles the users playMode choice and creates a Quiz object for the user which contains information on the users Movie Guessing Game
 def playMode(update: Update, context: CallbackContext) -> int:
     log_input(update)
@@ -37,10 +40,16 @@ def playMode(update: Update, context: CallbackContext) -> int:
         running_MovieGames[update.effective_chat.id].playmodus = "Easy"
         update.message.reply_text("Easy Peasy Lemon Squeezy")
         reply_keyboard = [
-            {running_MovieGames[update.effective_chat.id].answer, running_MovieGames[update.effective_chat.id].option2, running_MovieGames[update.effective_chat.id].option3, running_MovieGames[update.effective_chat.id].option3}
+            {
+                running_MovieGames[update.effective_chat.id].answer,
+                running_MovieGames[update.effective_chat.id].option2,
+                running_MovieGames[update.effective_chat.id].option3,
+                running_MovieGames[update.effective_chat.id].option3,
+            }
         ]
         update.message.reply_text(
-            "The movie you need to guess is:" + running_MovieGames[update.effective_chat.id].question,
+            "The movie you need to guess is:"
+            + running_MovieGames[update.effective_chat.id].question,
             reply_markup=ReplyKeyboardMarkup(
                 reply_keyboard,
                 one_time_keyboard=True,
@@ -50,9 +59,11 @@ def playMode(update: Update, context: CallbackContext) -> int:
     else:
         running_MovieGames[update.effective_chat.id].playmodus = "Hard"
         update.message.reply_text("Wow! Viel Glück!")
-        update.message.reply_text("The movie you need to guess is:" + running_MovieGames[update.effective_chat.id].question)        
+        update.message.reply_text(
+            "The movie you need to guess is:"
+            + running_MovieGames[update.effective_chat.id].question
+        )
     return GUESS
-
 
 
 # movieGuess --> handles the users guesses within their respective playmode and eventually ends the game
@@ -61,14 +72,18 @@ def movieGuess(update: Update, context: CallbackContext) -> None:
     if running_MovieGames[update.effective_chat.id].playmodus == "Easy":
         if update.message.text != running_MovieGames[update.effective_chat.id].answer:
             update.message.reply_text(
-                "Verdammt, knapp daneben, die richtige Antwort wäre " + running_MovieGames[update.effective_chat.id].answer
+                "Verdammt, knapp daneben, die richtige Antwort wäre "
+                + running_MovieGames[update.effective_chat.id].answer
             )
         else:
             update.message.reply_text("Herzlichen Glückwunsch! Du hast gewonnen!")
         del running_MovieGames[update.effective_chat.id]
         return ConversationHandler.END
     elif running_MovieGames[update.effective_chat.id].playmodus == "Hard":
-        if update.message.text.casefold() == running_MovieGames[update.effective_chat.id].answer.casefold():
+        if (
+            update.message.text.casefold()
+            == running_MovieGames[update.effective_chat.id].answer.casefold()
+        ):
             update.message.reply_text("Herzlichen Glückwunsch! Du hast gewonnen!")
             del running_MovieGames[update.effective_chat.id]
             return ConversationHandler.END
@@ -90,6 +105,7 @@ def movieGuess(update: Update, context: CallbackContext) -> None:
                 )
                 del running_MovieGames[update.effective_chat.id]
                 return ConversationHandler.END
+
 
 # stopgame --> enables the user to stop the game even if it is not yet finished
 def stopgame(update: Update, context: CallbackContext) -> int:
