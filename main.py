@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 
-import requests
 from telegram import Update, ForceReply
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from conf import API_KEY
 from main_commands import start, help_command, nudel, cat, echo
-from wordle_commands import wordle, guess
-from TicTacToe.TicTacToe_commands import *
+from TicTacToe.TicTacToe_commands import stop, guess, ticTacToeGame
 
 
 # Define a few command handlers. These usually take the two arguments update and
@@ -26,9 +24,10 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("nudel", nudel))
     dispatcher.add_handler(CommandHandler("cat", cat))
-    dispatcher.add_handler(CommandHandler("wordle", wordle))
+    #TicTacToe Kram
+    dispatcher.add_handler(CommandHandler("tic", ticTacToeGame))
     dispatcher.add_handler(CommandHandler("guess", guess))
-    dispatcher.add_handler(CommandHandler("tic", TicTacToe_Single))
+    dispatcher.add_handler(CommandHandler("stop", stop))
 
 
     # on non command i.e message - echo the message on Telegram

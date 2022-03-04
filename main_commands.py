@@ -1,7 +1,13 @@
 import requests
-from telegram import Update, ForceReply
+from telegram import Update, ForceReply, Message
 from telegram.ext import Updater, CallbackContext
-from TicTacToe.TicTacToe_commands import *
+
+def log_input(update):
+    print(str(update.message.chat_id) + " entered: " + update.message.text)
+
+
+def send_message(update: Update, text: str) -> Message:
+    return update.message.reply_text(text)
 
 def log_input(update):
     print(str(update.message.chat_id) + " entered: " + update.message.text)
