@@ -1,4 +1,4 @@
-from telegram import ForceReply, Message, Update
+from telegram import Message, Update
 from telegram.ext import CallbackContext
 import requests
 
