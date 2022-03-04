@@ -45,6 +45,7 @@ def guess(update: Update, context: CallbackContext) -> None:
         return
 
     # get player input
+    print(f'\n\nContextShit = {context.args}\n\n')
     player_input = context.args[0]
     row, col = player_input.split(',')
 
@@ -83,7 +84,7 @@ class GameMessage(ticTac):
         self.message = message
 
     def status(self):
-        message = super().state()
+        message = super().State()
         message += f"\n\n{self.err_msg}"
         self.err_msg = ""
         return message

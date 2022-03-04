@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-from sre_parse import State
 import string
 from IPython.display import display, display_svg
 from TicTacToe.exceptions import WinEx, LoseEx, GuessEx
@@ -10,7 +9,10 @@ class Guess:
         self.row = row
         self.col = col
 
-global msg, state, update
+global msg
+global State
+global update
+
 msg = "TEST"
 
 
@@ -42,75 +44,74 @@ class ticTac:
 
 
 
-    def evaluate(self, f, alpha=-1, beta=1):
+    def evaluate(self, ns, f, alpha=-1, beta=1):
         print("evaluate")
-        global gCache, State
-        if State in gCache:
-            flag, v = gCache[State]
+        print(f'FFFFFFFFF\n\n\n{f}\n\n\n\n\n\n\n\n')
+        if ns in self.gCache:
+            flag, v = self.gCache[ns]
             if flag == '=':
                 return v
             if flag == '≤':
                 if v <= alpha:
                     return v
                 elif alpha < v < beta:
-                    w = f(State, alpha, v)
-                    self.store_cache(State, alpha, v, w)
+                    w = f( alpha, v)
+                    self.store_cache(alpha, v, w)
                     return w
                 else:
-                    w = f(State, alpha, beta)
-                    self.store_cache(State, alpha, beta, w)
+                    w = f(alpha, beta)
+                    self.store_cache(alpha, beta, w)
                     return w
             if flag == '≥':
                 if beta <= v:
                     return v
                 elif alpha < v < beta:
-                    w = f(State, v, beta)
-                    self.store_cache(State, v, beta, w)
+                    w = f(v, beta)
+                    self.store_cache(v, beta, w)
                     return w
                 else:
-                    w = f(State, alpha, beta)
-                    self.store_cache(State, alpha, beta, w)
+                    w = f(alpha, beta)
+                    self.store_cache( alpha, beta, w)
                     return w
         else:
-            v = f(State, alpha, beta)
-            self.store_cache(State, alpha, beta, v)
+            v = f( alpha, beta)
+            self.store_cache( alpha, beta, v)
             return v
 
 
     def store_cache(self, alpha, beta, v):
         global State
         print("StoreCache")
-        global gCache
         if v <= alpha:
-            gCache[State] = ('≤', v)
+            self.gCache[State] = ('≤', v)
         elif v < beta:
-            gCache[State] = ('=', v)
+            self.gCache[State] = ('=', v)
         else:
-            gCache[State] = ('≥', v)
+            self.gCache[State] = ('≥', v)
 
 
-    def maxValue(self, State, alpha, beta):
+    def maxValue(self,alpha, beta):
         print("Maxval")
-        if self.finished(State):
-            return self.utility(State)
+        if self.finished():
+            return self.utility()
         if alpha >= beta:
             return alpha
         v = alpha
-        for ns in self.next_states(State, self.gPlayers[0]):
+        for ns in self.next_States(self.gPlayers[0]):
             v = max(v, self.evaluate(ns, self.minValue, v, beta))
             if v >= beta:
                 return v
         return v
 
 
-    def minValue(self, State, alpha, beta):
+    def minValue(self,  alpha, beta):
         print("minVal")
-        if self.finished(State):
-            return self.utility(State)
+        if self.finished():
+            return self.utility()
         if beta <= alpha:
             return beta
         v = beta
-        for ns in self.next_states(State, self.gPlayers[1]):
+        for ns in self.next_States(self.gPlayers[1]):
             v = min(v, self.evaluate(ns, self.maxValue, alpha, v))
             if v <= alpha:
                 return v
@@ -120,7 +121,7 @@ class ticTac:
     def best_move(self):
         global State
         print("best_move")
-        NS = self.next_states(State, self.gPlayers[0])
+        NS = self.next_States(self.gPlayers[0])
         bestValue = self.evaluate(State, self.maxValue, -1, 1)
         BestMoves = [s for s in NS if self.evaluate(s, self.minValue, -1, 1) == bestValue]
         BestState = random.choice(BestMoves)
@@ -135,7 +136,7 @@ class ticTac:
         return result
 
 
-    def set_bit(n):
+    def set_bit(self, n):
         print("set_bit")
         return 1 << n
 
@@ -145,9 +146,9 @@ class ticTac:
         print("toBoard")
         result = ''
         for cell in range(9):
-            if state & (2 ** cell) != 0:
+            if State & (2 ** cell) != 0:
                 result += '✖'
-            elif state & (2 ** (cell + 9)) != 0:
+            elif State & (2 ** (cell + 9)) != 0:
                 result += '⭕'
             else:
                 result += '⬜'
@@ -160,19 +161,19 @@ class ticTac:
         global State
         print("empty")
         Free = {n for n in range(9)}
-        Free -= {n for n in range(9) if state & (1 << n) != 0}
-        Free -= {n for n in range(9) if state & (1 << (9 + n)) != 0}
+        Free -= {n for n in range(9) if State & (1 << n) != 0}
+        Free -= {n for n in range(9) if State & (1 << (9 + n)) != 0}
         return Free
 
 
-    def next_states(self, player):
+    def next_States(self, player):
         global State
-        print("next_states")
-        Empty = self.empty(state)
+        print("next_States")
+        Empty = self.empty()
         Result = []
         for n in Empty:
-            next_state = state | self.set_bit(player * 9 + n)
-            Result.append(next_state)
+            next_State = State | self.set_bit(player * 9 + n)
+            Result.append(next_State)
         return Result
 
 
@@ -180,12 +181,12 @@ class ticTac:
         global State
         print("utility")
         for mask in self.gAllLines:
-            if state & mask == mask:
+            if State & mask == mask:
                 return 1
-            if (state >> 9) & mask == mask:
+            if (State >> 9) & mask == mask:
                 return -1
 
-        if (state & 511) | (state >> 9) != 511:
+        if (State & 511) | (State >> 9) != 511:
             return None
 
         return 0
@@ -194,7 +195,7 @@ class ticTac:
     def finished(self):
         global State
         print("finished")
-        return self.utility(state) != None
+        return self.utility() != None
 
 
     def get_move(self):
@@ -205,8 +206,8 @@ class ticTac:
                 row, col = input('Move eingeben bitte: ').split(',')
                 row, col = int(row), int(col)
                 mask = self.set_bit(9 + row * 3 + col)
-                if state & mask == 0:
-                    return state | mask
+                if State & mask == 0:
+                    return State | mask
                 update.message.reply_text("Nicht cheaten.")
             except:
                 update.message.reply_text('Illegaler Input.')
@@ -217,10 +218,10 @@ class ticTac:
     def final_msg(self):
         global State, update
         print("final_msg")
-        if self.finished(state):
-            if self.utility(state) == -1:
+        if self.finished(State):
+            if self.utility(State) == -1:
                 update.message.reply_text('Du hast gewonnen!')
-            elif self.utility(state) == 1:
+            elif self.utility(State) == 1:
                 update.message.reply_text('Der Computer hat gewonnen')
             else:
                 update.message.reply_text("Unendschieden")
@@ -231,9 +232,9 @@ class ticTac:
         global State
         print("get_Symbol")
         mask = self.set_bit(row * 3 + col)
-        if mask & state == mask:
+        if mask & State == mask:
             return 'X'
-        if mask & (state >> 9) == mask:
+        if mask & (State >> 9) == mask:
             return 'O'
         return ' '
 
@@ -242,12 +243,12 @@ class ticTac:
         global State
         print("draw")
 
-        x = self.to_board(state)
+        x = self.to_board(State)
         print(x)
         return x
 
 
-    def state(self) -> str:
+    def State(self) -> str:
         self.gamexyz()
         return msg
 
@@ -255,19 +256,19 @@ class ticTac:
         print("MAINMAINMAINMAIN")
         global msg, State, update
         State = self.gStart
-    
-        _, State = self.best_move(State)
-        msg = self.draw(State) # -> String
-        state(self.x)
+        # print(f'State = {State}')
+        _, State = self.best_move()
+        msg = self.draw() # -> String
+        State(self.x)
         # update.message.reply_text(x) # !
-        if self.finished(State):
-            self.final_msg(State, update)
+        if self.finished():
+            self.final_msg()
             # break
         State = self.guess()
         print(f'State = {State}')
-        msg = self.draw(State)  # -> String
-        state(self.x)
+        msg = self.draw()  # -> String
+        State(self.x)
         # update.message.reply_text(x) # !
-        if self.finished(State):
-            self.final_msg(State, update)
+        if self.finished():
+            self.final_msg()
             # break
