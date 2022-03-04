@@ -15,10 +15,7 @@ def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     log_input(update)
     user = update.effective_user
-    update.message.reply_markdown_v2(
-        rf"Hi {user.mention_markdown_v2()}\!",
-        reply_markup=ForceReply(selective=True),
-    )
+    send_message(update, f"Hi {user['first_name']}, Welcome to the MOT-Bot!")
 
 
 def help(update: Update, context: CallbackContext) -> None:
