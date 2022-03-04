@@ -56,12 +56,12 @@ def playMode(update: Update, context: CallbackContext) -> int:
         ("👑 💬 🎤", "The kings speech"),
         ("🌃 🏦 👨 🔦 🗿 🐒", "night at the museum"),
     ]
-    quiz = random.randint(0, len(questions))
-    false1 = random.randint(0, len(questions))
-    false2 = random.randint(0, len(questions))
-    false3 = random.randint(0, len(questions))
-    global playmodus
-    global answer
+    quiz = random.randint(0, len(questions)-1)
+    false1 = random.randint(0, len(questions)-1)
+    false2 = random.randint(0, len(questions)-1)
+    false3 = random.randint(0, len(questions)-1)
+    global playmodus, answer, guesscount
+    guesscount = 0
     answer = questions[quiz][1]
     update.message.reply_text("You chose" + update.message.text + "mode")
     if update.message.text == "Easy":
@@ -81,8 +81,10 @@ def playMode(update: Update, context: CallbackContext) -> int:
     else:
         playmodus = "Hard"
         update.message.reply_text("Wow! Viel Glück!")
-        update.message.reply_text("The movie you need to guess is:" + questions[quiz][0])
+        update.message.reply_text("The movie you need to guess is:" + questions[quiz][0])        
     return GUESS
+
+
 
 
 def movieGuess(update: Update, context: CallbackContext) -> None:
@@ -96,18 +98,18 @@ def movieGuess(update: Update, context: CallbackContext) -> None:
             update.message.reply_text("Herzlichen Glückwunsch! Du hast gewonnen!")
         return ConversationHandler.END
     elif playmodus == "Hard":
-        guesscounter = 0
         if update.message.text.casefold() == answer.casefold():
             update.message.reply_text("Herzlichen Glückwunsch! Du hast gewonnen!")
             return ConversationHandler.END
 
         elif update.message.text != answer:
-            guesscounter += 1
-            if guesscounter < 5:
+            global guesscount
+            guesscount += 1
+            if guesscount < 4:
                 update.message.reply_text(
                     "Das ist leider nicht richtig du hast noch "
-                    + str(5 - guesscounter)
-                    + " Versuche!"
+                    + str(5 - guesscount)
+                    + " Versuch(e)!"
                 )
                 return GUESS
             else:
