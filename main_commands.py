@@ -1,9 +1,12 @@
 import requests
-from telegram import Update, ForceReply
+from telegram import Update, ForceReply, Message
 from telegram.ext import Updater, CallbackContext
 
 def log_input(update):
     print(str(update.message.chat_id) + " entered: " + update.message.text)
+
+def send_message(update: Update, text: str) -> Message:
+    return update.message.reply_text(text)
 
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
@@ -17,6 +20,7 @@ def help_command(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /help is issued."""
     log_input(update)
     update.message.reply_text('HELP YOURSELVES!!eleven11!!')
+    update.message.reply_text('\nOr start a number game: /numbergame')
 
 
 def get_url():

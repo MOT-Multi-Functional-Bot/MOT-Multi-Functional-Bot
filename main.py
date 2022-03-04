@@ -1,15 +1,7 @@
-#!/usr/bin/env python
-
-import requests
-from telegram import Update, ForceReply
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from conf import API_KEY
 from main_commands import start, help_command, nudel, cat, echo
-from numbergame.numbers_commands import numbergame, guess
-
-
-# Define a few command handlers. These usually take the two arguments update and
-# context.
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from numbergame.numbergame_commands import guess, stop, numbergame, newnum
 
 
 def main() -> None:
@@ -20,17 +12,20 @@ def main() -> None:
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
 
-    # on different commands - answer in Telegram
-    dispatcher.add_handler(CommandHandler("start", start))
+    # Main Commands
+    dispatcher.add_handler(CommandHandler("cat", cat))
     dispatcher.add_handler(CommandHandler("help", help_command))
     dispatcher.add_handler(CommandHandler("nudel", nudel))
-    dispatcher.add_handler(CommandHandler("cat", cat))
-    dispatcher.add_handler(CommandHandler("numbergame", numbergame))
+    dispatcher.add_handler(CommandHandler("start", start))
+
+    # Numbergame Commands
     dispatcher.add_handler(CommandHandler("guess", guess))
+    dispatcher.add_handler(CommandHandler("stop", stop))
+    dispatcher.add_handler(CommandHandler("numbergame", numbergame))
+    dispatcher.add_handler(CommandHandler("newnum", newnum))
 
     # on non command i.e message - echo the message on Telegram
-    dispatcher.add_handler(MessageHandler(
-        Filters.text & ~Filters.command, echo))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
     # Start the Bot
     updater.start_polling()
@@ -41,5 +36,5 @@ def main() -> None:
     updater.idle()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
