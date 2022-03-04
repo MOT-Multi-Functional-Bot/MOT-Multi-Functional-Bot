@@ -4,9 +4,12 @@ from main_commands import log_input
 from MovieGame.moviequiz import Quiz
 
 PLAYMODE, GUESS = range(2)
+
+# running_MovieGames: Dictionary --> saving running games
 global running_MovieGames
 running_MovieGames = {}
 
+# movieGuessingGame --> entry point for the ConversationHandler starts the Movie Guessing Game
 def movieGuessingGame(update: Update, context: CallbackContext) -> int:
     """Movie guessing Game"""
     log_input(update)
@@ -24,10 +27,10 @@ def movieGuessingGame(update: Update, context: CallbackContext) -> int:
         )
         return PLAYMODE
 
-
+# playMode --> handles the users playMode choice and creates a Quiz object for the user which contains information on the users Movie Guessing Game
 def playMode(update: Update, context: CallbackContext) -> int:
     log_input(update)
-    
+
     running_MovieGames[update.effective_chat.id] = Quiz()
     update.message.reply_text("You chose" + update.message.text + "mode")
     if update.message.text == "Easy":
@@ -52,7 +55,7 @@ def playMode(update: Update, context: CallbackContext) -> int:
 
 
 
-
+# movieGuess --> handles the users guesses within their respective playmode and eventually ends the game
 def movieGuess(update: Update, context: CallbackContext) -> None:
     log_input(update)
     if running_MovieGames[update.effective_chat.id].playmodus == "Easy":
@@ -88,7 +91,7 @@ def movieGuess(update: Update, context: CallbackContext) -> None:
                 del running_MovieGames[update.effective_chat.id]
                 return ConversationHandler.END
 
-
+# stopgame --> enables the user to stop the game even if it is not yet finished
 def stopgame(update: Update, context: CallbackContext) -> int:
     log_input(update)
     update.message.reply_text("You ended the game")
