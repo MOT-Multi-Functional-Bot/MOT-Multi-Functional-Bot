@@ -3,6 +3,7 @@ from main_commands import cat, echo, help, noodle, start
 from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
 from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
 from MovieGame.moviegame import *
+from games.numbergame.numbergame_commands import numb, stopnumbergame, numbergame, newnum
 
 
 def main() -> None:
@@ -40,6 +41,11 @@ def main() -> None:
     # MovieGuessingGame added Conversation_Handler
     dispatcher.add_handler(movie_Guessing_Game)
 
+    # Numbergame Commands
+    dispatcher.add_handler(CommandHandler("numb", numb))
+    dispatcher.add_handler(CommandHandler("stopnumbergame", stopnumbergame))
+    dispatcher.add_handler(CommandHandler("numbergame", numbergame))
+    dispatcher.add_handler(CommandHandler("newnum", newnum))
 
     # on non command i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
