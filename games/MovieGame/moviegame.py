@@ -1,7 +1,7 @@
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import CallbackContext, ConversationHandler
 from main_commands import log_input
-from MovieGame.moviequiz import Quiz
+from games.MovieGame.moviequiz import Quiz
 
 PLAYMODE, GUESS = range(2)
 
