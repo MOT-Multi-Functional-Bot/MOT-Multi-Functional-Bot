@@ -1,77 +1,43 @@
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import CallbackContext, ConversationHandler
 from main_commands import log_input
-import random
+from MovieGame.moviequiz import Quiz
 
 PLAYMODE, GUESS = range(2)
-
+global running_MovieGames
+running_MovieGames = {}
 
 def movieGuessingGame(update: Update, context: CallbackContext) -> int:
     """Movie guessing Game"""
     log_input(update)
-    reply_keyboard = [["Easy", "Hard"]]
-    update.message.reply_text(
-        "You have started the movie guessing game!\n\n" "Which playmode do you chose?",
-        reply_markup=ReplyKeyboardMarkup(
-            reply_keyboard,
-            one_time_keyboard=True,
-            input_field_placeholder="Easy or Hard Mode?",
-        ),
-    )
-    return PLAYMODE
+    if update.effective_chat.id in running_MovieGames.keys():
+        update.message.reply_text("There is already a game running, if you want to start a new game enter /stopgame and then /MovieGuessingGame.")
+    else:
+        reply_keyboard = [["Easy", "Hard"]]
+        update.message.reply_text(
+            "You have started the movie guessing game!\n\n" "Which playmode do you chose?",
+            reply_markup=ReplyKeyboardMarkup(
+                reply_keyboard,
+                one_time_keyboard=True,
+                input_field_placeholder="Easy or Hard Mode?",
+            ),
+        )
+        return PLAYMODE
 
 
 def playMode(update: Update, context: CallbackContext) -> int:
     log_input(update)
-
-    questions = [
-        ("👳‍♂️ 🚣 🐯", "life of pi"),
-        ("👧 🐸 👑", "princess and the frog"),
-        ("🚀 ✨ 👩 🌍", "gravity"),
-        ("5️⃣ 0️⃣ 0️⃣ 🌞 ❤️", "500 days of summer"),
-        ("🔪 👩 🚿", "psycho"),
-        ("👧 ❗ ❓ ✈️", "Airplane"),
-        ("👨 👨 ❤️ 🏔️", "Brokeback mountain"),
-        ("🇯🇵 💣 🇺🇸 ⚓", "pearl harbour"),
-        ("👠 👰‍♀️ ⌚ 🌙", "cinderella"),
-        ("👦 🏠 👨 👨", "home alone"),
-        ("👼 ⛪ 👹", "angels and demons"),
-        ("🐀 🍲 🍛 🍝 🍜", "ratatouille"),
-        ("✏️ 📔 💏", "the notebook"),
-        ("🐳 ➡️ 🌊", "free willy"),
-        ("🌩️ 👨 🔨", "thor"),
-        ("🩸 💍", "Blood diamond"),
-        ("🎥 👣 👻", "Scary Movie"),
-        ("👨 ➡️ 🎅", "Santa Clause"),
-        ("🌍 🐒 🐒 🐒", "Planet of the apes"),
-        ("🐼 👊", "Kung Fu Panda"),
-        ("👨 🧸 🍻", "Ted"),
-        ("👦 🍫 🏭", "Charlie and the chocolate factory"),
-        ("😈 👗 👠", "The devil wears prada"),
-        ("🚢 🧊 🏔️", "Titanic"),
-        ("👦 💍 ➡️ 🌋", "Lord of the rings"),
-        ("👽 📞 🔈 👦 🚲 🌕", "ET"),
-        ("🍴 🙏 ❤️", "Eat Pray Love"),
-        ("💇‍♀️ 🇫🇷 👸 🎶", "Les misérables"),
-        ("👑 💬 🎤", "The kings speech"),
-        ("🌃 🏦 👨 🔦 🗿 🐒", "night at the museum"),
-    ]
-    quiz = random.randint(0, len(questions)-1)
-    false1 = random.randint(0, len(questions)-1)
-    false2 = random.randint(0, len(questions)-1)
-    false3 = random.randint(0, len(questions)-1)
-    global playmodus, answer, guesscount
-    guesscount = 0
-    answer = questions[quiz][1]
+    
+    running_MovieGames[update.effective_chat.id] = Quiz()
     update.message.reply_text("You chose" + update.message.text + "mode")
     if update.message.text == "Easy":
-        playmodus = "Easy"
+        running_MovieGames[update.effective_chat.id].playmodus = "Easy"
         update.message.reply_text("Easy Peasy Lemon Squeezy")
         reply_keyboard = [
-            {answer, questions[false1][1], questions[false2][1], questions[false3][1]}
+            {running_MovieGames[update.effective_chat.id].answer, running_MovieGames[update.effective_chat.id].option2, running_MovieGames[update.effective_chat.id].option3, running_MovieGames[update.effective_chat.id].option3}
         ]
         update.message.reply_text(
-            "The movie you need to guess is:" + questions[quiz][0],
+            "The movie you need to guess is:" + running_MovieGames[update.effective_chat.id].question,
             reply_markup=ReplyKeyboardMarkup(
                 reply_keyboard,
                 one_time_keyboard=True,
@@ -79,9 +45,9 @@ def playMode(update: Update, context: CallbackContext) -> int:
             ),
         )
     else:
-        playmodus = "Hard"
+        running_MovieGames[update.effective_chat.id].playmodus = "Hard"
         update.message.reply_text("Wow! Viel Glück!")
-        update.message.reply_text("The movie you need to guess is:" + questions[quiz][0])        
+        update.message.reply_text("The movie you need to guess is:" + running_MovieGames[update.effective_chat.id].question)        
     return GUESS
 
 
@@ -89,35 +55,37 @@ def playMode(update: Update, context: CallbackContext) -> int:
 
 def movieGuess(update: Update, context: CallbackContext) -> None:
     log_input(update)
-    if playmodus == "Easy":
-        if update.message.text != answer:
+    if running_MovieGames[update.effective_chat.id].playmodus == "Easy":
+        if update.message.text != running_MovieGames[update.effective_chat.id].answer:
             update.message.reply_text(
-                "Verdammt, knapp daneben, die richtige Antwort wäre " + answer
+                "Verdammt, knapp daneben, die richtige Antwort wäre " + running_MovieGames[update.effective_chat.id].answer
             )
         else:
             update.message.reply_text("Herzlichen Glückwunsch! Du hast gewonnen!")
+        del running_MovieGames[update.effective_chat.id]
         return ConversationHandler.END
-    elif playmodus == "Hard":
-        if update.message.text.casefold() == answer.casefold():
+    elif running_MovieGames[update.effective_chat.id].playmodus == "Hard":
+        if update.message.text.casefold() == running_MovieGames[update.effective_chat.id].answer.casefold():
             update.message.reply_text("Herzlichen Glückwunsch! Du hast gewonnen!")
+            del running_MovieGames[update.effective_chat.id]
             return ConversationHandler.END
 
-        elif update.message.text != answer:
-            global guesscount
-            guesscount += 1
-            if guesscount < 4:
+        else:
+            running_MovieGames[update.effective_chat.id].guesscount += 1
+            if running_MovieGames[update.effective_chat.id].guesscount < 5:
                 update.message.reply_text(
                     "Das ist leider nicht richtig du hast noch "
-                    + str(5 - guesscount)
+                    + str(5 - running_MovieGames[update.effective_chat.id].guesscount)
                     + " Versuch(e)!"
                 )
                 return GUESS
             else:
                 update.message.reply_text(
                     "Du hast leider verloren! Die richtige Antwort wäre "
-                    + answer
+                    + running_MovieGames[update.effective_chat.id].answer
                     + " gewesen."
                 )
+                del running_MovieGames[update.effective_chat.id]
                 return ConversationHandler.END
 
 
