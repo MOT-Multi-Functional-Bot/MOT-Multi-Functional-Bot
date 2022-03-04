@@ -3,11 +3,14 @@ from telegram.ext import CallbackContext
 from .exceptions import GameOverEx, GuessEx
 from .numbergame import numbergame
 
+
 def log_input(update):
     print(str(update.message.chat_id) + " entered: " + update.message.text)
 
+
 def send_message(update: Update, text: str) -> Message:
     return update.message.reply_text(text)
+
 
 class GameMessage(numbergame):
     def __init__(self, message: Message):
@@ -52,7 +55,10 @@ def numbergame(update: Update, context: CallbackContext) -> None:
         return
 
     running_games[update.effective_chat.id] = GameMessage(
-        send_message(update, "I choose my number between 0-100! \nUse /guess 'Number' to start guessing!")
+        send_message(
+            update,
+            "I choose my number between 0-100! \nUse /guess 'Number' to start guessing!",
+        )
     )
 
 
@@ -88,6 +94,7 @@ def guess(update: Update, context: CallbackContext) -> None:
 
     game.status()
 
+
 def stop(update: Update, context: CallbackContext) -> None:
     log_input(update)
     global running_games
@@ -98,6 +105,7 @@ def stop(update: Update, context: CallbackContext) -> None:
         return
 
     send_message(update, "There is no game running!")
+
 
 def newnum(update: Update, context: CallbackContext) -> None:
     log_input(update)
@@ -110,7 +118,10 @@ def newnum(update: Update, context: CallbackContext) -> None:
     player_input = " ".join(context.args).upper()
 
     if player_input == "":
-        send_message(update, "Set a new range with \n\n/newnum 'Number'. \n\nThe range is max 1.000.000.\nYou can only reset once a game.\nAnd your tries will be reset.")
+        send_message(
+            update,
+            "Set a new range with \n\n/newnum 'Number'. \n\nThe range is max 1.000.000.\nYou can only reset once a game.\nAnd your tries will be reset.",
+        )
         return
 
     game = running_games[update.effective_chat.id]
