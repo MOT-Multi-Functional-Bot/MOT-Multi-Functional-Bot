@@ -27,9 +27,6 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("stats", stats))
     dispatcher.add_handler(CommandHandler("howto", howto))
 
-    # MovieGuessingGame Commands
-    dispatcher.add_handler(movie_Guessing_Game)
-
     # MovieGuessingGame Conversation Handler
     movie_Guessing_Game = ConversationHandler(
         entry_points=[CommandHandler("MovieGuessingGame", movieGuessingGame)],
@@ -39,6 +36,9 @@ def main() -> None:
         },
         fallbacks=[CommandHandler("stopgame", stopgame)],
     )
+
+    # MovieGuessingGame Commands
+    dispatcher.add_handler(movie_Guessing_Game)
 
     # Numbergame Commands
     dispatcher.add_handler(CommandHandler("numb", numb))
