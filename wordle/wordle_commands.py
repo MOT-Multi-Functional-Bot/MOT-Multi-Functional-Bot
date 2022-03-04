@@ -49,7 +49,10 @@ def wordle(update: Update, context: CallbackContext) -> None:
         return
 
     running_games[update.effective_chat.id] = GameMessage(
-        send_message(update, "The game has started! Use /guess 'abcde' to take a guess!")
+        send_message(
+            update,
+            "The game has started! Use /guess 'abcde' to take a guess! \n Use /howto to get instructions on how to play the game!",
+        )
     )
 
 
@@ -154,3 +157,16 @@ def stats(update: Update, context: CallbackContext) -> None:
         send_message(update, stat_msg)
     else:
         send_message(update, "Looks like you have not played yet!")
+
+
+def howto(update: Update, context: CallbackContext) -> None:
+    msg = "How to play wordle:\n\n"
+    msg += "- You need to guess what the hidden word is.\n"
+    msg += "- The hidden word is always a german word with the length of 5.\n"
+    msg += "- You have six tries to guess the correct word.\n"
+    msg += "- Use /guess 'abcde' to take a guess!\n\n"
+    msg += "With each guess the game will help you by providing feedback:\n"
+    msg += " 🟩: the letter at this position is correct.\n"
+    msg += " 🟪: the letter is in the word, but on the wrong position.\n"
+    msg += " ⬛: the letter is not in the word.\n\n"
+    send_message(update, msg)
