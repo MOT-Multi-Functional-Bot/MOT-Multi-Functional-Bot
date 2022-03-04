@@ -29,6 +29,7 @@ def ticTacToeGame(update: Update, context: CallbackContext) -> None:
         send_message(update, "The game has started! Use /guess '\{0-2\}},\{0-2\}}' to take a guess!")
     )
 
+
 def check_game_status(chat_id: int) -> bool:
     global running_games
     return running_games.get(chat_id) is not None
@@ -44,7 +45,9 @@ def guess(update: Update, context: CallbackContext) -> None:
         return
 
     # get player input
-    player_input = " ".join(context.args).upper()
+    player_input = context.args[0]
+    row, col = player_input.split(',')
+
 
     if player_input == "":
         send_message(update, "Guess a word by using /guess 'word'")
@@ -56,7 +59,7 @@ def guess(update: Update, context: CallbackContext) -> None:
     # run guess
     userid = str(update.message.chat_id)
     try:
-        game.guess(player_input)
+        game.guess(row, col)
 
     # if error while guessing occurs display the error message to player
     except GuessEx as e:
@@ -84,7 +87,7 @@ class GameMessage(ticTac):
         message += f"\n\n{self.err_msg}"
         self.err_msg = ""
         return message
-
+    
     # Update the statis message for the player
     def update_message(self):
         edit_message(self.message, self.status())
