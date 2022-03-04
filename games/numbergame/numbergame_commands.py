@@ -57,12 +57,12 @@ def numbergame(update: Update, context: CallbackContext) -> None:
     running_games[update.effective_chat.id] = GameMessage(
         send_message(
             update,
-            "I choose my number between 0-100! \nUse /guess 'Number' to start guessing!",
+            "I choose my number between 0-100! \nUse /numb 'Number' to start guessing!",
         )
     )
 
 
-def guess(update: Update, context: CallbackContext) -> None:
+def numb(update: Update, context: CallbackContext) -> None:
     log_input(update)
     global running_games
 
@@ -73,7 +73,7 @@ def guess(update: Update, context: CallbackContext) -> None:
     player_input = " ".join(context.args).upper()
 
     if player_input == "":
-        send_message(update, "Guess a number by using /guess 'number'")
+        send_message(update, "Guess a number by using /numb 'number'")
         return
 
     game = running_games[update.effective_chat.id]
@@ -81,7 +81,7 @@ def guess(update: Update, context: CallbackContext) -> None:
     userid = str(update.message.chat_id)
 
     try:
-        game.guess(player_input, userid)
+        game.numb(player_input, userid)
 
     except GuessEx as e:
         game.err_msg = str(e)
@@ -95,7 +95,7 @@ def guess(update: Update, context: CallbackContext) -> None:
     game.status()
 
 
-def stop(update: Update, context: CallbackContext) -> None:
+def stopnumbergame(update: Update, context: CallbackContext) -> None:
     log_input(update)
     global running_games
 

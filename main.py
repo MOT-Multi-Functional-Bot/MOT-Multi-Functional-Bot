@@ -1,7 +1,7 @@
 from conf import API_KEY
 from main_commands import start, help_command, nudel, cat, echo
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from games.numbergame.numbergame_commands import guess, stop, numbergame, newnum
+from games.numbergame.numbergame_commands import numb, stopnumbergame, numbergame, newnum
 
 
 def main() -> None:
@@ -19,8 +19,8 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("start", start))
 
     # Numbergame Commands
-    dispatcher.add_handler(CommandHandler("guess", guess))
-    dispatcher.add_handler(CommandHandler("stop", stop))
+    dispatcher.add_handler(CommandHandler("numb", numb))
+    dispatcher.add_handler(CommandHandler("stopnumbergame", stopnumbergame))
     dispatcher.add_handler(CommandHandler("numbergame", numbergame))
     dispatcher.add_handler(CommandHandler("newnum", newnum))
 

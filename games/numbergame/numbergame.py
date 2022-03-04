@@ -30,7 +30,7 @@ class numbergame:
 
         return msg
 
-    def guess(self, guess: str, userid: str) -> numtoguess:
+    def numb(self, guess: str, userid: str) -> numtoguess:
 
         if self.reset:
             if not guess.isnumeric():
