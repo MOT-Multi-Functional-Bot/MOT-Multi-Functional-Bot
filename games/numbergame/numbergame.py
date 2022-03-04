@@ -16,7 +16,7 @@ class numbergame:
         self.selected_number = get_random_number(100)
         self.tries = 0
         self.reset = False
-
+        self.newrange = 0
         print("Number of Computer: ", self.selected_number)
 
     def state(self) -> str:
@@ -30,11 +30,18 @@ class numbergame:
 
     def guess(self, guess: str, userid: str) -> numtoguess:
 
-        if not guess.isnumeric():
-            raise GuessEx("the guess is not a number")
+        if self.reset:
+            if not guess.isnumeric():
+                raise GuessEx("the guess is not a number")
 
-        if int(guess) > 100 or int(guess) < 0:
-            raise GuessEx("The guesses number is out of range 0-100")
+            if int(guess) > self.newrange or int(guess) < 0:
+                raise GuessEx("Your number is out of range 0-100")
+        else:
+            if not guess.isnumeric():
+                raise GuessEx("the guess is not a number")
+
+            if int(guess) > 100 or int(guess) < 0:
+                raise GuessEx(f"Your number is out of range 0-{self.newrange}")
 
         self.tries += 1
 
@@ -57,16 +64,21 @@ class numbergame:
     
     def newnum(self, guess: str, userid: str) -> numtoguess:
 
+        if self.reset:
+            raise GuessEx("You already did one reset no more for you!")
+
+        self.reset = True
+        self.newrange = int(guess)
+
         if not guess.isnumeric():
             raise GuessEx("The nw Number is not a Number")
 
         if int(guess) > 1000000 or int(guess) < 0:
-            raise GuessEx("The guesses number is out of range 0-1.000.000")
+            raise GuessEx("Your Range is to Big, max 1.000.000")
 
         self.tries = 0
 
-        if self.reset:
-            raise GuessEx("You already did one reset no more for you!")
+        
 
         print(f'Old num: {self.selected_number} New range: {int(guess)}')
         self.selected_number = get_random_number(int(guess))

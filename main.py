@@ -1,7 +1,7 @@
 from conf import API_KEY
 from main_commands import start, help_command, nudel, cat, echo
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-from numbergame.numbergame_commands import guess, stop, numbergame, newnum
+from games.numbergame.numbergame_commands import guess, stop, numbergame, newnum
 
 
 def main() -> None:
