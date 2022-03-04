@@ -1,15 +1,7 @@
-#!/usr/bin/env python
-
-import requests
-from telegram import Update, ForceReply
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from conf import API_KEY
-from main_commands import start, help_command, nudel, cat, echo
-from wordle_commands import wordle, guess
-
-
-# Define a few command handlers. These usually take the two arguments update and
-# context.
+from main_commands import cat, echo, help, noodle, start
+from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
+from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
 
 
 def main() -> None:
@@ -20,18 +12,21 @@ def main() -> None:
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
 
-    # on different commands - answer in Telegram
-    dispatcher.add_handler(CommandHandler("start", start))
-    dispatcher.add_handler(CommandHandler("help", help_command))
-    dispatcher.add_handler(CommandHandler("nudel", nudel))
+    # Main Commands
     dispatcher.add_handler(CommandHandler("cat", cat))
-    dispatcher.add_handler(CommandHandler("wordle", wordle))
-    dispatcher.add_handler(CommandHandler("guess", guess))
+    dispatcher.add_handler(CommandHandler("help", help))
+    dispatcher.add_handler(CommandHandler("noodle", noodle))
+    dispatcher.add_handler(CommandHandler("start", start))
 
+    # Wordle Commands
+    dispatcher.add_handler(CommandHandler("guess", guess))
+    dispatcher.add_handler(CommandHandler("stop", stop))
+    dispatcher.add_handler(CommandHandler("wordle", wordle))
+    dispatcher.add_handler(CommandHandler("stats", stats))
+    dispatcher.add_handler(CommandHandler("howto", howto))
 
     # on non command i.e message - echo the message on Telegram
-    dispatcher.add_handler(MessageHandler(
-        Filters.text & ~Filters.command, echo))
+    dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
     # Start the Bot
     updater.start_polling()
@@ -42,5 +37,5 @@ def main() -> None:
     updater.idle()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()
