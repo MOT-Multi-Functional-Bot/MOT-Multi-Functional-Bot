@@ -1,7 +1,9 @@
 from conf import API_KEY
 from main_commands import cat, echo, help, noodle, start
-from telegram.ext import CommandHandler, Filters, MessageHandler, Updater
+from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
 from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
+from games.MovieGame.moviegame import *
+from games.numbergame.numbergame_commands import numb, stopnumbergame, numbergame, newnum
 
 
 def main() -> None:
@@ -24,6 +26,25 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("wordle", wordle))
     dispatcher.add_handler(CommandHandler("stats", stats))
     dispatcher.add_handler(CommandHandler("howto", howto))
+
+    # MovieGuessingGame Conversation Handler
+    movie_Guessing_Game = ConversationHandler(
+        entry_points=[CommandHandler("MovieGuessingGame", movieGuessingGame)],
+        states={
+            PLAYMODE: [MessageHandler(Filters.regex("^(Easy|Hard)$"), playMode)],
+            GUESS: [MessageHandler(Filters.regex("^[\w*\s]*$"), movieGuess)],
+        },
+        fallbacks=[CommandHandler("stopgame", stopgame)],
+    )
+
+    # MovieGuessingGame Commands
+    dispatcher.add_handler(movie_Guessing_Game)
+
+    # Numbergame Commands
+    dispatcher.add_handler(CommandHandler("numb", numb))
+    dispatcher.add_handler(CommandHandler("stopnumbergame", stopnumbergame))
+    dispatcher.add_handler(CommandHandler("numbergame", numbergame))
+    dispatcher.add_handler(CommandHandler("newnum", newnum))
 
     # on non command i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
