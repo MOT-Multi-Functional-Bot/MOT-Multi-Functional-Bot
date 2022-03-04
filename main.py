@@ -28,7 +28,6 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("cat", cat))
     dispatcher.add_handler(CommandHandler("wordle", wordle))
     dispatcher.add_handler(CommandHandler("guess", guess))
-    dispatcher.add_handler(CommandHandler("MultiTic", TicTacToe_Multiplayer))
     dispatcher.add_handler(CommandHandler("tic", TicTacToe_Single))
 
 
