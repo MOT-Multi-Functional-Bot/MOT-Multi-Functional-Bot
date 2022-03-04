@@ -68,7 +68,7 @@ def playMode(update: Update, context: CallbackContext) -> int:
         playmodus = "Easy"
         update.message.reply_text("Easy Peasy Lemon Squeezy")
         reply_keyboard = [
-            [answer, questions[false1][1], questions[false2][1], questions[false3][1]]
+            {answer, questions[false1][1], questions[false2][1], questions[false3][1]}
         ]
         update.message.reply_text(
             "The movie you need to guess is:" + questions[quiz][0],
