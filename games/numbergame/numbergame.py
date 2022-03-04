@@ -1,5 +1,5 @@
 import random
-from .exceptions import GuessEx, WinEx
+from games.numbergame.exceptions import GuessEx, WinEx
 
 
 def get_random_number(x) -> int:

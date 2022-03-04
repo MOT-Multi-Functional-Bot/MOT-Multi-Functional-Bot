@@ -1,7 +1,7 @@
 from telegram import Update, Message
 from telegram.ext import CallbackContext
-from .exceptions import GameOverEx, GuessEx
-from .numbergame import numbergame
+from games.numbergame.exceptions import GameOverEx, GuessEx
+from games.numbergame.numbergame import numbergame
 
 
 def log_input(update):
