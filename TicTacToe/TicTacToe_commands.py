@@ -13,6 +13,8 @@ from TicTacToe.exceptions import GameOverEx, GuessEx
 #     update.message.reply_text("You are trying to play TicTacToe Singleplayer!")
 #     TicTacToe.TicTacToeBitboard.main(0,  update, CallbackContext)
 
+running_games: "dict[int, GameMessage]" = {}
+
 
 def ticTacToeGame(update: Update, context: CallbackContext) -> None:
     """Play the TicTacToe game"""
@@ -24,7 +26,7 @@ def ticTacToeGame(update: Update, context: CallbackContext) -> None:
         return
 
     running_games[update.effective_chat.id] = GameMessage(
-        send_message(update, "The game has started! Use /guess 'abcde' to take a guess!")
+        send_message(update, "The game has started! Use /guess '\{0-2\}},\{0-2\}}' to take a guess!")
     )
 
 def check_game_status(chat_id: int) -> bool:
@@ -54,7 +56,7 @@ def guess(update: Update, context: CallbackContext) -> None:
     # run guess
     userid = str(update.message.chat_id)
     try:
-        game.guess(player_input, userid)
+        game.guess(player_input)
 
     # if error while guessing occurs display the error message to player
     except GuessEx as e:
@@ -87,7 +89,7 @@ class GameMessage(ticTac):
     def update_message(self):
         edit_message(self.message, self.status())
 
-running_games: "dict[int, GameMessage]" = {}
+
 
 
 def edit_message(message: Message, text: str) -> Message:
@@ -102,5 +104,8 @@ def stop(update: Update, context: CallbackContext) -> None:
     if check_game_status(update.effective_chat.id):
         # remove chat id from running games
         del running_games[update.effective_chat.id]
-        send_message(update, "Game stopped! Resume with /TicTacToe!")
+        send_message(update, "Game stopped! Resume with /wordle!")
         return
+
+    # gets sent, if no game is running
+    send_message(update, "There is no game running!")

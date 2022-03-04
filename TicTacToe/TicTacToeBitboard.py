@@ -1,8 +1,12 @@
 #!/usr/bin/env python
+import string
 from IPython.display import display, display_svg
 from TicTacToe.exceptions import WinEx, LoseEx, GuessEx
 import random
 
+class Guess:
+    def __init__(self, pos: str):
+        self.row, self.col = pos.split(',')  # word that needs to be guessed
 
 class ticTac:
     def __init__(self) -> None:
@@ -22,6 +26,9 @@ class ticTac:
         self.randomNumber = random.randint(1, 99)
         random.seed(self.randomNumber)
 
+
+    def guess(self, guess: str) -> Guess:
+        return Guess(guess)
 
 
 
@@ -114,7 +121,7 @@ class ticTac:
         return 1 << n
 
 
-    def to_board(self, state):
+    def to_board(self, state) -> string:
         result = ''
         for cell in range(9):
             if state & (2 ** cell) != 0:
@@ -187,10 +194,6 @@ class ticTac:
             return True
         return False
 
-
-    size = 150
-
-
     def get_symbol(self, state, row, col):
         mask = self.set_bit(row * 3 + col)
         if mask & state == mask:
@@ -200,25 +203,32 @@ class ticTac:
         return ' '
 
 
-    def draw(self, state):
+    def draw(self, state) -> str:
         x = self.to_board(state)
-        # print(x)
+        print(x)
         return x
 
+    def result(self, x) -> str:
+        return self.x
 
+    def state(self, x) -> str:
+        msg = self.result(self.x)
+        return msg
 
     def main(self, state, update, context) -> None:
         State = self.gStart
         while (True):
             val, State = self.best_move(State)
-            x = self.draw(State)
-            update.message.reply_text(x)
+            x = self.draw(State) # -> String
+            state(self.x)
+            # update.message.reply_text(x) # !
             if self.finished(State):
                 self.final_msg(State, update)
                 break
             State = self.get_move(State, update)
-            x = self.draw(State)
-            update.message.reply_text(x)
+            x = self.draw(State)  # -> String
+            state(self.x)
+            # update.message.reply_text(x) # !
             if self.finished(State):
                 self.final_msg(State, update)
                 break
