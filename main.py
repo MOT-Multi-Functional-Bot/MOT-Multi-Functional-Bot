@@ -1,9 +1,16 @@
+
+#!/usr/bin/env python
+
+from telegram import Update, ForceReply
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 from conf import API_KEY
-from main_commands import cat, echo, help, noodle, start
-from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
+from main_commands import start, help_command, nudel, cat, echo
+from TicTacToe.TicTacToe_commands import stop, guess, ticTacToeGame
 from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
 from games.MovieGame.moviegame import *
 from games.numbergame.numbergame_commands import numb, stopnumbergame, numbergame, newnum
+
+
 
 
 def main() -> None:
@@ -16,9 +23,16 @@ def main() -> None:
 
     # Main Commands
     dispatcher.add_handler(CommandHandler("cat", cat))
+
+
     dispatcher.add_handler(CommandHandler("help", help))
     dispatcher.add_handler(CommandHandler("noodle", noodle))
     dispatcher.add_handler(CommandHandler("start", start))
+    
+    #TicTacToe Kram
+    dispatcher.add_handler(CommandHandler("tic", ticTacToeGame))
+    dispatcher.add_handler(CommandHandler("guess", guess))
+    dispatcher.add_handler(CommandHandler("stop", stop))
 
     # Wordle Commands
     dispatcher.add_handler(CommandHandler("guess", guess))

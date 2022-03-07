@@ -1,7 +1,8 @@
 from telegram import Message, Update
 from telegram.ext import CallbackContext
 import requests
-
+from telegram import Update, ForceReply, Message
+from telegram.ext import Updater, CallbackContext
 
 def log_input(update):
     print(f"{str(update.message.chat_id)} entered: '{update.message.text}'")
@@ -10,6 +11,13 @@ def log_input(update):
 def send_message(update: Update, text: str) -> Message:
     return update.message.reply_text(text)
 
+
+
+def send_message(update: Update, text: str) -> Message:
+    return update.message.reply_text(text)
+
+def log_input(update):
+    print(str(update.message.chat_id) + " entered: " + update.message.text)
 
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
@@ -26,6 +34,7 @@ def help(update: Update, context: CallbackContext) -> None:
 
 def echo(update: Update, context: CallbackContext) -> None:
     """Echo the user message."""
+    global TicTacToeMultiplayer
     log_input(update)
     send_message(update, f"{update.message.text}, thats weird isn't it ?")
 
@@ -49,3 +58,7 @@ def cat(update: Update, context: CallbackContext) -> None:
     log_input(update)
     url = get_url()
     update.message.reply_photo(url)
+    
+def tic(update: Update, context: CallbackContext) -> None:
+    log_input(update)
+    TicTacToe_Multiplayer()
