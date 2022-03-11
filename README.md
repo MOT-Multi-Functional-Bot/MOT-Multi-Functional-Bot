@@ -23,13 +23,18 @@
 - In addition, he can tell you a lot of information or pictures about different things to pass the time
 - The focus is on a working mini-game, playable in Telegram with the bot. After that more modules (games or random facts) are planned.
 
+## You need help with this repo?
+
+In case Commandos or other things are not clear, there is a detailed documentation of our repo under the Wiki tab.
+Or if you have any other questions about telchnology decisions, or you have questions about tools or scaling the bot, check out the wiki page. [MOT-Bot Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki)
+
 ## Project history
 
 ```mermaid
 
  flowchart TD
-    A[MOT Idea] --> B{What programming language?};
-    B -- Deno --> C[Telegram libraries not good enough];
+    A[MOT Idea] --> B{What programming language/framework?};
+    B -- Deno / Typescript --> C[Telegram libraries not good enough];
     B -- Python --> D[Good Telegram Libraries];
     D --> E[Large community];
     E --> F[Good for calculation ];
@@ -37,11 +42,13 @@
     G -- Problems --> H[Bug];
     H --> I[Block commands in a Telegrambot];
     I --> J[Asked question on Stack Overflow];
-    G -- In Progress --> K[Bigger Smaller Numbers Game];
-    G -- In Progress --> L[Movies guessing with emojis];
-    G -- In Progress --> M[Wordle];
+    G -- Finished --> K[Bigger Smaller Numbers Game];
+    G -- Finished --> L[Movies guessing with emojis];
+    G -- Finished --> M[Wordle];
     G -- In Progress --> N[TicTacToe];
-    N --> O[Multiplayer version runs];
-    O --> PT[Singleplayer version runs];
+    K --> O[Merged into Main Branch];
+    L --> O;
+    M --> O;
+
 
 ```
