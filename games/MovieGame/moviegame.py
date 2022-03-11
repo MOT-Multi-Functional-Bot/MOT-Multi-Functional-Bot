@@ -20,7 +20,7 @@ def movieGuessingGame(update: Update, context: CallbackContext) -> int:
     else:
         reply_keyboard = [["Easy", "Hard"]]
         update.message.reply_text(
-            "You have started the movie guessing game!\n\n" "Which playmode do you chose?",
+            "You have started the movie guessing game!\n\n" "Which playmode do you chose? Easy or Hard? \n\n If you want to stop the game send /stopgame.",
             reply_markup=ReplyKeyboardMarkup(
                 reply_keyboard,
                 one_time_keyboard=True,
@@ -35,7 +35,7 @@ def playMode(update: Update, context: CallbackContext) -> int:
     log_input(update)
 
     running_MovieGames[update.effective_chat.id] = Quiz()
-    update.message.reply_text("You chose" + update.message.text + "mode")
+    update.message.reply_text("You chose " + update.message.text + " mode")
     if update.message.text == "Easy":
         running_MovieGames[update.effective_chat.id].playmodus = "Easy"
         update.message.reply_text("Easy Peasy Lemon Squeezy")
@@ -58,7 +58,7 @@ def playMode(update: Update, context: CallbackContext) -> int:
         )
     else:
         running_MovieGames[update.effective_chat.id].playmodus = "Hard"
-        update.message.reply_text("Wow! Viel Glück!")
+        update.message.reply_text("Wow! Good Luck!")
         update.message.reply_text(
             "The movie you need to guess is:"
             + running_MovieGames[update.effective_chat.id].question
