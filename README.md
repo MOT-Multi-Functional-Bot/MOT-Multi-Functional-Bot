@@ -10,10 +10,16 @@
     </small>
 </div>
 
-![GitHub last commit (branch)](https://img.shields.io/github/last-commit/NoWo2000/MOT-Multi-Functional-Bot/main)
-[![GitHub issues](https://img.shields.io/github/issues/NoWo2000/MOT-Multi-Functional-Bot)](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/issues)
-![GitHub language count](https://img.shields.io/github/languages/count/NoWo2000/MOT-Multi-Functional-Bot)
-![Lines of code](https://img.shields.io/tokei/lines/github/NoWo2000/MOT-Multi-Functional-Bot)
+<p align="center">
+ <a href="https://github.com/NoWo2000/MOT-Multi-Functional-Bot/commits/main" alt="last commit">
+        <img src="https://img.shields.io/github/last-commit/NoWo2000/MOT-Multi-Functional-Bot/main" /></a>
+ <a href="https://github.com/NoWo2000/MOT-Multi-Functional-Bot/issues" alt="issues">
+        <img src="https://img.shields.io/github/issues/NoWo2000/MOT-Multi-Functional-Bot" /></a>
+ <a href="https://github.com/NoWo2000/MOT-Multi-Functional-Bot" alt="total lines">
+        <img src="https://img.shields.io/tokei/lines/github/NoWo2000/MOT-Multi-Functional-Bot" /></a>
+ <a href="https://github.com/NoWo2000/MOT-Multi-Functional-Bot" alt="top language">
+        <img src="https://img.shields.io/github/languages/top/NoWo2000/MOT-Multi-Functional-Bot" /></a>
+</p>
 
 ---
 
