@@ -11,6 +11,7 @@ def send_message(update: Update, text: str) -> Message:
     return update.message.reply_text(text)
 
 
+
 def start(update: Update, context: CallbackContext) -> None:
     """Send a message when the command /start is issued."""
     log_input(update)

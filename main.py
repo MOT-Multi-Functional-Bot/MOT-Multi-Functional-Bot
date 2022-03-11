@@ -6,6 +6,7 @@ from games.MovieGame.moviegame import *
 from games.numbergame.numbergame_commands import numb, stopnumbergame, numbergame, newnum
 
 
+
 def main() -> None:
     """Start the bot."""
     # Create the Updater and pass it your bot's token.
@@ -14,6 +15,17 @@ def main() -> None:
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
 
+    # MovieGuessingGame Conversation Handler
+    movie_Guessing_Game = ConversationHandler(
+        entry_points=[CommandHandler("MovieGuessingGame", movieGuessingGame)],
+        states={
+            PLAYMODE: [MessageHandler(Filters.regex("^(Easy|Hard)$"), playMode)],
+            GUESS: [MessageHandler(Filters.regex("^[\w*\s]*$"), movieGuess)],
+        },
+        fallbacks=[CommandHandler("stopgame", stopgame)],
+    )
+
+   
     # Main Commands
     dispatcher.add_handler(CommandHandler("cat", cat))
     dispatcher.add_handler(CommandHandler("help", help))
@@ -26,6 +38,10 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("wordle", wordle))
     dispatcher.add_handler(CommandHandler("stats", stats))
     dispatcher.add_handler(CommandHandler("howto", howto))
+    
+    # MovieGuessingGame added Conversation_Handler
+    dispatcher.add_handler(movie_Guessing_Game)
+
 
     # MovieGuessingGame Conversation Handler
     movie_Guessing_Game = ConversationHandler(
