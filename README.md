@@ -1,4 +1,10 @@
-# MOT-Multi-Functional-Bot
+
+
+<p align="center">
+ 
+ <a href="https://github.com/NoWo2000/MOT-Multi-Functional-Bot/" alt="LOGO" >
+        <img src="https://user-images.githubusercontent.com/56127795/157863462-ecf46e40-76ed-44cf-8024-05c87066c636.png" /></a><br><br>
+</p>
 
 <div align="center">
     <small>Built by:
@@ -10,7 +16,9 @@
     </small>
 </div>
 
+
 <p align="center">
+ 
  <a href="https://github.com/NoWo2000/MOT-Multi-Functional-Bot/commits/main" alt="last commit">
         <img src="https://img.shields.io/github/last-commit/NoWo2000/MOT-Multi-Functional-Bot/main" /></a>
  <a href="https://github.com/NoWo2000/MOT-Multi-Functional-Bot/issues" alt="issues">
