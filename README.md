@@ -30,7 +30,7 @@
 
 # How to start your own MOT-Bot
 
-You can run our but directly in python or run it in a docker container!
+You can run our bot directly in python or run it in a docker container!
 
 ## Use a docker container
 
