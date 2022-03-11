@@ -10,7 +10,6 @@
     </small>
 </div>
 
-
 ![GitHub last commit (branch)](https://img.shields.io/github/last-commit/NoWo2000/MOT-Multi-Functional-Bot/main)
 [![GitHub issues](https://img.shields.io/github/issues/NoWo2000/MOT-Multi-Functional-Bot)](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/issues)
 ![GitHub language count](https://img.shields.io/github/languages/count/NoWo2000/MOT-Multi-Functional-Bot)
@@ -23,32 +22,48 @@
 - In addition, he can tell you a lot of information or pictures about different things to pass the time
 - The focus is on a working mini-game, playable in Telegram with the bot. After that more modules (games or random facts) are planned.
 
-## How to start your own MOT-Bot
-1. Text our running MOT on Telegram via (PENDING)
-2. Create your own MOT:
-    - Clone this repository
-    - install all requirements:
+# How to start your own MOT-Bot
 
-    ```bash
-    pip3 install -r requirements.txt --upgrade
-    ```
-    - Rename the `conf.template.py` to `conf.py` and add your personal API-Key.
-        - If you don't know how to do this open the `conf.template.py` and read the instructions.
-    - To run the bot go to your console and type:
+You can run our but directly in python or run it in a docker container!
 
-    ```bash
-    python3 main.py
-    ```
-    - To get all the functionalities type `/help`. For further information visite the [MOT-Bot Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki) page.
+## Use a docker container
 
+- Clone the repository
+- Rename the `conf.template.py` to `conf.py` and add your own API-Key.
+  If you don't know how to do this open the `conf.template.py` and read the instructions.
+- Run:
 
+```bash
+   docker-compose up -d
+```
 
-## You need help with this repo?
+## Run it directly in python
+
+Create your own MOT:
+
+- Clone this repository
+- Install all requirements:
+
+```bash
+pip3 install -r requirements.txt --upgrade
+```
+
+- Rename the `conf.template.py` to `conf.py` and add your personal API-Key.
+  - If you don't know how to do this open the `conf.template.py` and read the instructions.
+- To run the bot go to your console and type:
+
+```bash
+python3 main.py
+```
+
+- To get all the functionalities type `/help`. For further information visite the [MOT-Bot Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki) page.
+
+# You need help with this repo?
 
 In case Commandos or other things are not clear, there is a detailed documentation of our repo under the Wiki tab.
 Or if you have any other questions about telchnology decisions, or you have questions about tools or scaling the bot, check out the wiki page. [MOT-Bot Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki)
 
-## Project history
+# Project history
 
 ```mermaid
 
