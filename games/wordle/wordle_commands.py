@@ -1,9 +1,9 @@
-import json
+from games.wordle.exceptions import GameOverEx, GuessEx
+from games.wordle.wordle import wordle
 from main_commands import log_input, send_message
 from telegram import Message, Update
 from telegram.ext import CallbackContext
-from games.wordle.exceptions import GameOverEx, GuessEx
-from games.wordle.wordle import wordle
+import json
 
 # Class for caching sent messages
 class GameMessage(wordle):

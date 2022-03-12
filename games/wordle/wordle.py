@@ -1,6 +1,6 @@
-import json
 from games.wordle.exceptions import GuessEx, LoseEx, WinEx
 from games.wordle.wordlist import check_if_word_exists, get_random_word
+import json
 
 
 class Guess:

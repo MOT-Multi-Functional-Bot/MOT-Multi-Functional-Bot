@@ -1,9 +1,9 @@
 from conf import API_KEY
-from main_commands import cat, echo, help, noodle, start
-from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
-from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
 from games.MovieGame.moviegame import *
 from games.numbergame.numbergame_commands import numb, stopnumbergame, numbergame, newnum
+from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
+from main_commands import cat, echo, help, noodle, start
+from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
 
 
 def main() -> None:
