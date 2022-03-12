@@ -1,10 +1,11 @@
+from datetime import datetime
 from telegram import Message, Update
 from telegram.ext import CallbackContext
 import requests
 
 
 def log_input(update):
-    print(f"{str(update.message.chat_id)} entered: '{update.message.text}'")
+    print(f"[{datetime.now()}] {str(update.message.chat_id)} used: '{update.message.text}'")
 
 
 def send_message(update: Update, text: str) -> Message:
