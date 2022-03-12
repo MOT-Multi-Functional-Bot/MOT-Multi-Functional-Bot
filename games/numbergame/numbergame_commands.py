@@ -46,7 +46,7 @@ def check_game_status(chat_id: int) -> bool:
 
 # Main command
 def numbergame(update: Update, context: CallbackContext) -> None:
-    """Play the wordle game"""
+    """Play the numbergame"""
     log_input(update)
     global running_games
 
