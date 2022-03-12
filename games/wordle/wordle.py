@@ -1,6 +1,6 @@
-import json
 from games.wordle.exceptions import GuessEx, LoseEx, WinEx
 from games.wordle.wordlist import check_if_word_exists, get_random_word
+import json
 
 
 class Guess:
@@ -20,7 +20,7 @@ class wordle:
         self.tries = 6  # amount of tries allowed
         self.wrong_letters = set()  # wrong letters guessed by player
         # For debugging purposes
-        print("The Player needs to guess the word:", self.selected_word)
+        # print("The Player needs to guess the word:", self.selected_word)
 
     def state(self) -> str:
         # Build the state of the game for the player
@@ -159,7 +159,7 @@ class wordle:
             f = open("games\wordle\stats.json", "r")
         # if file does not exist, create it
         except FileNotFoundError:
-            print("Stats file count not be found, so it will be created!")
+            print("Stats file could not be found. Creating file now!")
             f = open("games\wordle\stats.json", "w+")
             f.write("{}")
             f.close()
@@ -195,7 +195,7 @@ class wordle:
             elif guesses_needed == 6:
                 data[userid]["games_lost"] += 1
         except FileNotFoundError:
-            print("Stats file count not be found!")
+            print("Stats file could not be found!")
         finally:
             f.close()
             # save data to file

@@ -1,7 +1,7 @@
+from games.MovieGame.moviequiz import Quiz
+from main_commands import log_input
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import CallbackContext, ConversationHandler
-from main_commands import log_input
-from games.MovieGame.moviequiz import Quiz
 
 PLAYMODE, GUESS = range(2)
 
@@ -20,7 +20,8 @@ def movieGuessingGame(update: Update, context: CallbackContext) -> int:
     else:
         reply_keyboard = [["Easy", "Hard"]]
         update.message.reply_text(
-            "You have started the movie guessing game!\n\n" "Which playmode do you chose? Easy or Hard? \n\n If you want to stop the game send /stopgame.",
+            "You have started the movie guessing game!\n\n"
+            "Which playmode do you chose? Easy or Hard? \n\n If you want to stop the game send /stopgame.",
             reply_markup=ReplyKeyboardMarkup(
                 reply_keyboard,
                 one_time_keyboard=True,

@@ -1,9 +1,9 @@
-import json
+from games.wordle.exceptions import GameOverEx, GuessEx
+from games.wordle.wordle import wordle
 from main_commands import log_input, send_message
 from telegram import Message, Update
 from telegram.ext import CallbackContext
-from games.wordle.exceptions import GameOverEx, GuessEx
-from games.wordle.wordle import wordle
+import json
 
 # Class for caching sent messages
 class GameMessage(wordle):
@@ -120,7 +120,7 @@ def stats(update: Update, context: CallbackContext) -> None:
         data = json.load(f)
     # if file does not exist, throw error
     except FileNotFoundError:
-        print("Stats file count not be found!")
+        print("Stats file could not be found!")
         send_message(update, "There was an error accessing your stats!")
     finally:
         f.close()
