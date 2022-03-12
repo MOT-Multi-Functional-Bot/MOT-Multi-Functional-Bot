@@ -5,7 +5,7 @@ import requests
 
 
 def log_input(update):
-    print(f"[{datetime.now()}] {str(update.message.chat_id)} used: '{update.message.text}'")
+    print(f"[{datetime.now()}] {str(update.message.chat_id)} : '{update.message.text}'")
 
 
 def send_message(update: Update, text: str) -> Message:
