@@ -19,7 +19,7 @@ class numbergame:
         self.tries = 0
         self.reset = False
         self.newrange = 0
-        print("Number of Computer: ", self.selected_number)
+        # print("Number to guess: ", self.selected_number)
 
     def state(self) -> str:
 
@@ -48,14 +48,14 @@ class numbergame:
         self.tries += 1
 
         is_guess_correct = int(guess) == self.selected_number
-        print(
-            f"guess: {int(guess)} ist gleich set: {self.selected_number} oder: {int(guess) == self.selected_number}"
-        )
+        # print(
+        #     f"guess: {int(guess)} ist gleich set: {self.selected_number} oder: {int(guess) == self.selected_number}"
+        # )
 
         if is_guess_correct:
             self.finished = True
 
-            print("ich raise win")
+            # print("User won!")
             raise WinEx(f"You have successfully guess the word {self.selected_number}!")
 
         if int(guess) < self.selected_number:
@@ -82,9 +82,9 @@ class numbergame:
 
         self.tries = 0
 
-        print(f"Old num: {self.selected_number} New range: {int(guess)}")
+        # print(f"Old num: {self.selected_number} New range: {int(guess)}")
         self.selected_number = get_random_number(int(guess))
-        print(f"New num: {self.selected_number}")
+        # print(f"New num: {self.selected_number}")
 
         raise GuessEx(f"New number in range of 0-{int(guess)} was set.")
 

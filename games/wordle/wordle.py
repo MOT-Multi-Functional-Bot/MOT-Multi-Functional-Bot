@@ -20,7 +20,7 @@ class wordle:
         self.tries = 6  # amount of tries allowed
         self.wrong_letters = set()  # wrong letters guessed by player
         # For debugging purposes
-        print("The Player needs to guess the word:", self.selected_word)
+        # print("The Player needs to guess the word:", self.selected_word)
 
     def state(self) -> str:
         # Build the state of the game for the player
