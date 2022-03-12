@@ -120,7 +120,7 @@ def stats(update: Update, context: CallbackContext) -> None:
         data = json.load(f)
     # if file does not exist, throw error
     except FileNotFoundError:
-        print("Stats file count not be found!")
+        print("Stats file could not be found!")
         send_message(update, "There was an error accessing your stats!")
     finally:
         f.close()

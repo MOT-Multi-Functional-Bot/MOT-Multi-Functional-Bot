@@ -159,7 +159,7 @@ class wordle:
             f = open("games\wordle\stats.json", "r")
         # if file does not exist, create it
         except FileNotFoundError:
-            print("Stats file count not be found, so it will be created!")
+            print("Stats file could not be found. Creating file now!")
             f = open("games\wordle\stats.json", "w+")
             f.write("{}")
             f.close()
@@ -195,7 +195,7 @@ class wordle:
             elif guesses_needed == 6:
                 data[userid]["games_lost"] += 1
         except FileNotFoundError:
-            print("Stats file count not be found!")
+            print("Stats file could not be found!")
         finally:
             f.close()
             # save data to file
