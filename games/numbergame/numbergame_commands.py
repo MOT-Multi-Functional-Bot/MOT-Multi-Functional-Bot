@@ -2,10 +2,7 @@ from telegram import Update, Message
 from telegram.ext import CallbackContext
 from games.numbergame.exceptions import GameOverEx, GuessEx
 from games.numbergame.numbergame import numbergame
-
-
-def log_input(update):
-    print(str(update.message.chat_id) + " entered: " + update.message.text)
+from main_commands import log_input
 
 
 def send_message(update: Update, text: str) -> Message:
