@@ -45,9 +45,7 @@ class wordle:
     def solve_guess(self, guess_input: str) -> bool:
         formatted_word = ""
         # go through all letters of the word
-        for pos, (current_letter, word_letter) in enumerate(
-            zip(guess_input, self.selected_word)
-        ):
+        for pos, (current_letter, word_letter) in enumerate(zip(guess_input, self.selected_word)):
             # if letter is not in the word at the current position
             if current_letter not in self.selected_word:
                 formatted_word += "⬛"
@@ -63,14 +61,12 @@ class wordle:
             else:
                 # amount of occurences of the current letter in the word
                 letter_amount = self.selected_word.count(current_letter)
-                # i = pos; l = letter
+                # i is the current position; l is the current letter
                 for i, l in enumerate(self.selected_word):
                     # check if letter is the current letter
-                    if l == current_letter:
-                        # check if the playery guess includes the current letter
-                        if guess_input[i] == current_letter:
-                            # reduce letter amount
-                            letter_amount -= 1
+                    if l == current_letter and guess_input[i] == current_letter:
+                        # reduce letter amount
+                        letter_amount -= 1
 
                 # check if the letter amount is zero, add a fail
                 if letter_amount == 0:

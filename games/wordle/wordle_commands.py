@@ -139,9 +139,7 @@ def stats(update: Update, context: CallbackContext) -> None:
         guesses_4 = data[userid]["guesses_4"]
         guesses_5 = data[userid]["guesses_5"]
         # Sum all guesses with their corresponding factor
-        total_guesses = (
-            guesses_1 + guesses_2 * 2 + guesses_3 * 3 + guesses_4 * 4 + guesses_5 * 5
-        )
+        total_guesses = guesses_1 + guesses_2 * 2 + guesses_3 * 3 + guesses_4 * 4 + guesses_5 * 5
         # calculate the average amount of guesses a user needed, and round it to 2 decimal places
         if games_won > 0:
             avg_guesses = round(total_guesses / games_won, 2)
