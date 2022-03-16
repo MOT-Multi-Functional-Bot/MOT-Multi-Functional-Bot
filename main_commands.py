@@ -47,19 +47,17 @@ def echo(update: Update, context: CallbackContext) -> None:
 def noodle(update: Update, context: CallbackContext) -> None:
     """Spam back at the user."""
     log_input(update)
-    for i in range(10):
+    for _ in range(10):
         send_message(update, "🍜🍜NOODLEATTACK!!🍜🍜")
 
 
 def get_url():
     """ "Get a random cat"""
     contents = requests.get("https://cataas.com/cat?json=true").json()
-    url = contents["url"]
-    return "https://cataas.com/" + url
+    return "https://cataas.com/" + contents["url"]
 
 
 def cat(update: Update, context: CallbackContext) -> None:
     """Send cat pic."""
     log_input(update)
-    url = get_url()
-    update.message.reply_photo(url)
+    update.message.reply_photo(get_url())
