@@ -2,6 +2,8 @@ from games.wordle.exceptions import GuessEx, LoseEx, WinEx
 from games.wordle.wordlist import check_if_word_exists, get_random_word
 import json
 
+statsPath = "games\wordle\stats.json"
+
 
 class Guess:
     def __init__(self, word: str, correction: str, correct_guess: bool = False):
@@ -63,7 +65,7 @@ class wordle:
                 letter_amount = self.selected_word.count(current_letter)
                 # i is the current position; l is the current letter
                 for i, l in enumerate(self.selected_word):
-                    # check if letter is the current letter
+                    # check if letter is the current letter and check if the playery guess includes the current letter
                     if l == current_letter and guess_input[i] == current_letter:
                         # reduce letter amount
                         letter_amount -= 1
@@ -152,16 +154,16 @@ class wordle:
         guesses_needed = 6 - self.tries
         # check if file exists
         try:
-            f = open("games\wordle\stats.json", "r")
+            f = open(statsPath, "r")
         # if file does not exist, create it
         except FileNotFoundError:
             print("Stats file could not be found. Creating file now!")
-            f = open("games\wordle\stats.json", "w+")
+            f = open(statsPath, "w+")
             f.write("{}")
             f.close()
         # open stats file
         try:
-            f = open("games\wordle\stats.json", "r")
+            f = open(statsPath, "r")
             data = json.load(f)
             # create player if not existent
             if userid not in data:
