@@ -61,11 +61,11 @@ class wordle:
                 self.progress[pos] = current_letter
 
             else:
-                # amount of occurences of the current letter in the word
+                # amount of occurrences of the current letter in the word
                 letter_amount = self.selected_word.count(current_letter)
                 # i is the current position; l is the current letter
                 for i, l in enumerate(self.selected_word):
-                    # check if letter is the current letter and check if the playery guess includes the current letter
+                    # check if letter is the current letter and check if the player guess includes the current letter
                     if l == current_letter and guess_input[i] == current_letter:
                         # reduce letter amount
                         letter_amount -= 1
