@@ -129,7 +129,7 @@ class wordle:
             wordle.save_stats(self, userid)
             # set tries to signal a lose
             self.tries = -1
-            raise LoseEx(f"No more tries left. Your word was {self.selected_word}!")
+            raise LoseEx(f"No tries left.")
 
         # return the guess from the player, formatted_word and a bool if the guess was correct
         return Guess(guess, guess_corrected, is_guess_correct)
@@ -144,9 +144,10 @@ class wordle:
             # player lost game
             guesses_needed = "X"
 
-        msg = f"[{guesses_needed}/6]\n"
-        msg += "\n"
+        msg = f"[{guesses_needed}/6]\n\n"
         msg += "\n".join(guess.correction for guess in self.guesses)
+        if guesses_needed == "X":
+            msg += f"\n\n Your word was {self.selected_word}!"
 
         return msg
 
