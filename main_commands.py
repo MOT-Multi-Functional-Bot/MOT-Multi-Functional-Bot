@@ -32,7 +32,7 @@ def help(update: Update, context: CallbackContext) -> None:
     msg += "Just kidding! This Bot provides you with three games and some other entertainment features:\n\n"
     msg += "The /wordle game is a game, where the Bot chooses a word and you have 6 guesses to guess the right word.\n\n"
     msg += "When you choose the /numbergame the bot chooses a number that you have to guess. The bot will give you hints if the chosen number is higher or lower than your guess.\n\n"
-    msg += "When playing the /movieguessinggame, the bot will provide you a set of emojis and you have to guess the respective movie title. There are two playmodes you kann play in easy and hard.\n\n"
+    msg += "When playing the /movieguessinggame, the bot will provide you a set of emojis and you have to guess the respective movie title. There are two playmodes you can play in easy and hard.\n\n"
     msg += "For other entertainment you can use the /cat command and the Bot will send you a cute picture of a cat or the /noodle command to get attacked with a noodles :D\n\n"
     msg += "Have fun!"
     send_message(update, msg)

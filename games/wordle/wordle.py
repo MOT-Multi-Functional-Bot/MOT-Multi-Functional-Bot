@@ -61,11 +61,11 @@ class wordle:
                 self.progress[pos] = current_letter
 
             else:
-                # amount of occurences of the current letter in the word
+                # amount of occurrences of the current letter in the word
                 letter_amount = self.selected_word.count(current_letter)
                 # i is the current position; l is the current letter
                 for i, l in enumerate(self.selected_word):
-                    # check if letter is the current letter and check if the playery guess includes the current letter
+                    # check if letter is the current letter and check if the player guess includes the current letter
                     if l == current_letter and guess_input[i] == current_letter:
                         # reduce letter amount
                         letter_amount -= 1
@@ -129,7 +129,7 @@ class wordle:
             wordle.save_stats(self, userid)
             # set tries to signal a lose
             self.tries = -1
-            raise LoseEx(f"No more tries left. Your word was {self.selected_word}!")
+            raise LoseEx(f"No tries left.")
 
         # return the guess from the player, formatted_word and a bool if the guess was correct
         return Guess(guess, guess_corrected, is_guess_correct)
@@ -144,9 +144,10 @@ class wordle:
             # player lost game
             guesses_needed = "X"
 
-        msg = f"[{guesses_needed}/6]\n"
-        msg += "\n"
+        msg = f"[{guesses_needed}/6]\n\n"
         msg += "\n".join(guess.correction for guess in self.guesses)
+        if guesses_needed == "X":
+            msg += f"\n\n Your word was {self.selected_word}!"
 
         return msg
 

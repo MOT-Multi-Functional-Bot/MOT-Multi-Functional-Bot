@@ -160,7 +160,7 @@ def stats(update: Update, context: CallbackContext) -> None:
 def howto(update: Update, context: CallbackContext) -> None:
     msg = "How to play wordle:\n\n"
     msg += "- You need to guess what the hidden word is.\n"
-    msg += "- The hidden word is always a german word with the length of 5.\n"
+    msg += "- The hidden word is always an english word with the length of 5.\n"
     msg += "- You have six tries to guess the correct word.\n"
     msg += "- Use /guess 'abcde' to take a guess!\n\n"
     msg += "With each guess the game will help you by providing feedback:\n"
