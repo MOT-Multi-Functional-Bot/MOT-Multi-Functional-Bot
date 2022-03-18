@@ -71,7 +71,7 @@ python3 main.py
 
 - To get all the functionalities type `/help`. For further information visit the [MOT-Bot Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki) page.
 
-# You need help or future information of this repo?
+# You need help or further information of this repo?
 
 In case Commandos or other things are not clear, there is a detailed documentation of our repo under the Wiki tab.
 Or if you have any other questions about technology decisions, or you have questions about tools or scaling the bot, check out the wiki page. [MOT-Bot Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki)
