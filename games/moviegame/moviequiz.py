@@ -1,6 +1,6 @@
 import random
 
-# Quiz is a class that contains all the information on a MovieGuessingGame
+# Quiz is a class that contains all the information on a movieguessinggame
 # this class is necessary in order to differentiate the different games for the different users.
 
 
@@ -42,7 +42,7 @@ class Quiz:
         ]
 
         # randomized choice of a quiz and optional choose options for Easy playmode
-        self.quiz = random.randint(0, len(self.questions) - 1)
+        self.round = random.randint(0, len(self.questions) - 1)
         self.false1 = random.randint(0, len(self.questions) - 1)
         self.false2 = random.randint(0, len(self.questions) - 1)
         self.false3 = random.randint(0, len(self.questions) - 1)
@@ -51,13 +51,13 @@ class Quiz:
         self.guesscount = 0
 
         # setting the answer and the question of the Quiz with the previously randomly chosen self.quiz variable
-        self.answer = self.questions[self.quiz][1]
-        self.question = self.questions[self.quiz][0]
+        self.answer = self.questions[self.round][1]
+        self.question = self.questions[self.round][0]
 
         # initializing the variable playmodus
         self.playmodus = None
 
         # setting the answer options for the Easy mode by using the previously randomly chosen self.false1, self.false2 and self.false3 variables
-        self.option2 = self.questions[self.false1][1]
-        self.option3 = self.questions[self.false2][1]
-        self.option4 = self.questions[self.false3][1]
+        self.option1 = self.questions[self.false1][1]
+        self.option2 = self.questions[self.false2][1]
+        self.option3 = self.questions[self.false3][1]

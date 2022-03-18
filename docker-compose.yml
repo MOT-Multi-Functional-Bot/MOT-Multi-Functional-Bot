@@ -1,4 +1,5 @@
 version: "3"
-services:  
+services:
   bot:
     build: .
+    container_name: mot-bot   

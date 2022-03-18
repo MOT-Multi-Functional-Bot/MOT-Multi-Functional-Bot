@@ -1,6 +1,8 @@
-import json
 from games.wordle.exceptions import GuessEx, LoseEx, WinEx
 from games.wordle.wordlist import check_if_word_exists, get_random_word
+import json
+
+statsPath = "games\wordle\stats.json"
 
 
 class Guess:
@@ -20,7 +22,7 @@ class wordle:
         self.tries = 6  # amount of tries allowed
         self.wrong_letters = set()  # wrong letters guessed by player
         # For debugging purposes
-        print("The Player needs to guess the word:", self.selected_word)
+        # print("The Player needs to guess the word:", self.selected_word)
 
     def state(self) -> str:
         # Build the state of the game for the player
@@ -45,9 +47,7 @@ class wordle:
     def solve_guess(self, guess_input: str) -> bool:
         formatted_word = ""
         # go through all letters of the word
-        for pos, (current_letter, word_letter) in enumerate(
-            zip(guess_input, self.selected_word)
-        ):
+        for pos, (current_letter, word_letter) in enumerate(zip(guess_input, self.selected_word)):
             # if letter is not in the word at the current position
             if current_letter not in self.selected_word:
                 formatted_word += "⬛"
@@ -61,16 +61,14 @@ class wordle:
                 self.progress[pos] = current_letter
 
             else:
-                # amount of occurences of the current letter in the word
+                # amount of occurrences of the current letter in the word
                 letter_amount = self.selected_word.count(current_letter)
-                # i = pos; l = letter
+                # i is the current position; l is the current letter
                 for i, l in enumerate(self.selected_word):
-                    # check if letter is the current letter
-                    if l == current_letter:
-                        # check if the playery guess includes the current letter
-                        if guess_input[i] == current_letter:
-                            # reduce letter amount
-                            letter_amount -= 1
+                    # check if letter is the current letter and check if the player guess includes the current letter
+                    if l == current_letter and guess_input[i] == current_letter:
+                        # reduce letter amount
+                        letter_amount -= 1
 
                 # check if the letter amount is zero, add a fail
                 if letter_amount == 0:
@@ -131,7 +129,7 @@ class wordle:
             wordle.save_stats(self, userid)
             # set tries to signal a lose
             self.tries = -1
-            raise LoseEx(f"No more tries left. Your word was {self.selected_word}!")
+            raise LoseEx(f"No tries left.")
 
         # return the guess from the player, formatted_word and a bool if the guess was correct
         return Guess(guess, guess_corrected, is_guess_correct)
@@ -146,9 +144,10 @@ class wordle:
             # player lost game
             guesses_needed = "X"
 
-        msg = f"[{guesses_needed}/6]\n"
-        msg += "\n"
+        msg = f"[{guesses_needed}/6]\n\n"
         msg += "\n".join(guess.correction for guess in self.guesses)
+        if guesses_needed == "X":
+            msg += f"\n\n Your word was {self.selected_word}!"
 
         return msg
 
@@ -156,16 +155,16 @@ class wordle:
         guesses_needed = 6 - self.tries
         # check if file exists
         try:
-            f = open("games\wordle\stats.json", "r")
+            f = open(statsPath, "r")
         # if file does not exist, create it
         except FileNotFoundError:
-            print("Stats file count not be found, so it will be created!")
-            f = open("games\wordle\stats.json", "w+")
+            print("Stats file could not be found. Creating file now!")
+            f = open(statsPath, "w+")
             f.write("{}")
             f.close()
         # open stats file
         try:
-            f = open("games\wordle\stats.json", "r")
+            f = open(statsPath, "r")
             data = json.load(f)
             # create player if not existent
             if userid not in data:
@@ -195,7 +194,7 @@ class wordle:
             elif guesses_needed == 6:
                 data[userid]["games_lost"] += 1
         except FileNotFoundError:
-            print("Stats file count not be found!")
+            print("Stats file could not be found!")
         finally:
             f.close()
             # save data to file

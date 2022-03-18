@@ -1,9 +1,9 @@
-import json
+from games.wordle.exceptions import GameOverEx, GuessEx
+from games.wordle.wordle import wordle
 from main_commands import log_input, send_message
 from telegram import Message, Update
 from telegram.ext import CallbackContext
-from games.wordle.exceptions import GameOverEx, GuessEx
-from games.wordle.wordle import wordle
+import json
 
 # Class for caching sent messages
 class GameMessage(wordle):
@@ -120,7 +120,7 @@ def stats(update: Update, context: CallbackContext) -> None:
         data = json.load(f)
     # if file does not exist, throw error
     except FileNotFoundError:
-        print("Stats file count not be found!")
+        print("Stats file could not be found!")
         send_message(update, "There was an error accessing your stats!")
     finally:
         f.close()
@@ -139,9 +139,7 @@ def stats(update: Update, context: CallbackContext) -> None:
         guesses_4 = data[userid]["guesses_4"]
         guesses_5 = data[userid]["guesses_5"]
         # Sum all guesses with their corresponding factor
-        total_guesses = (
-            guesses_1 + guesses_2 * 2 + guesses_3 * 3 + guesses_4 * 4 + guesses_5 * 5
-        )
+        total_guesses = guesses_1 + guesses_2 * 2 + guesses_3 * 3 + guesses_4 * 4 + guesses_5 * 5
         # calculate the average amount of guesses a user needed, and round it to 2 decimal places
         if games_won > 0:
             avg_guesses = round(total_guesses / games_won, 2)
@@ -162,7 +160,7 @@ def stats(update: Update, context: CallbackContext) -> None:
 def howto(update: Update, context: CallbackContext) -> None:
     msg = "How to play wordle:\n\n"
     msg += "- You need to guess what the hidden word is.\n"
-    msg += "- The hidden word is always a german word with the length of 5.\n"
+    msg += "- The hidden word is always an english word with the length of 5.\n"
     msg += "- You have six tries to guess the correct word.\n"
     msg += "- Use /guess 'abcde' to take a guess!\n\n"
     msg += "With each guess the game will help you by providing feedback:\n"

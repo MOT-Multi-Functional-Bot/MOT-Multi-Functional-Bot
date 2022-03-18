@@ -1,10 +1,9 @@
 from conf import API_KEY
+from games.moviegame.moviegame_commands import GUESS, PLAYMODE, movieguess, movieguessinggame, playmode, stopgame
+from games.numbergame.numbergame_commands import numb, stopnumbergame, numbergame, newnum
+from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
 from main_commands import cat, echo, help, noodle, start
 from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
-from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
-from games.MovieGame.moviegame import *
-from games.numbergame.numbergame_commands import numb, stopnumbergame, numbergame, newnum
-
 
 
 def main() -> None:
@@ -15,17 +14,6 @@ def main() -> None:
     # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
 
-    # MovieGuessingGame Conversation Handler
-    movie_Guessing_Game = ConversationHandler(
-        entry_points=[CommandHandler("MovieGuessingGame", movieGuessingGame)],
-        states={
-            PLAYMODE: [MessageHandler(Filters.regex("^(Easy|Hard)$"), playMode)],
-            GUESS: [MessageHandler(Filters.regex("^[\w*\s]*$"), movieGuess)],
-        },
-        fallbacks=[CommandHandler("stopgame", stopgame)],
-    )
-
-   
     # Main Commands
     dispatcher.add_handler(CommandHandler("cat", cat))
     dispatcher.add_handler(CommandHandler("help", help))
@@ -38,23 +26,19 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("wordle", wordle))
     dispatcher.add_handler(CommandHandler("stats", stats))
     dispatcher.add_handler(CommandHandler("howto", howto))
-    
-    # MovieGuessingGame added Conversation_Handler
-    dispatcher.add_handler(movie_Guessing_Game)
 
-
-    # MovieGuessingGame Conversation Handler
-    movie_Guessing_Game = ConversationHandler(
-        entry_points=[CommandHandler("MovieGuessingGame", movieGuessingGame)],
+    # movieguessinggame Conversation Handler
+    movie_guessing_game = ConversationHandler(
+        entry_points=[CommandHandler("movieguessinggame", movieguessinggame)],
         states={
-            PLAYMODE: [MessageHandler(Filters.regex("^(Easy|Hard)$"), playMode)],
-            GUESS: [MessageHandler(Filters.regex("^[\w*\s]*$"), movieGuess)],
+            PLAYMODE: [MessageHandler(Filters.regex("^(Easy|Hard)$"), playmode)],
+            GUESS: [MessageHandler(Filters.regex("^[\w*\s]*$"), movieguess)],
         },
         fallbacks=[CommandHandler("stopgame", stopgame)],
     )
 
-    # MovieGuessingGame Commands
-    dispatcher.add_handler(movie_Guessing_Game)
+    # movieguessinggame Commands
+    dispatcher.add_handler(movie_guessing_game)
 
     # Numbergame Commands
     dispatcher.add_handler(CommandHandler("numb", numb))
