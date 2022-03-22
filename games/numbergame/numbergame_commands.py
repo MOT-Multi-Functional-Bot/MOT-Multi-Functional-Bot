@@ -1,8 +1,14 @@
 from telegram import Update, Message
 from telegram.ext import CallbackContext
-from games.numbergame.exceptions import GameOverEx, GuessEx
-from games.numbergame.numbergame import numbergame
-from main_commands import log_input
+from .exceptions import GameOverEx, GuessEx
+from .numbergame import numbergame
+from datetime import datetime
+
+def log_input(update):
+    print(f"[{datetime.now()}] {str(update.message.chat_id)} : '{update.message.text}'")
+
+def send_message(update: Update, text: str) -> Message:
+    return update.message.reply_text(text)
 
 
 def send_message(update: Update, text: str) -> Message:

@@ -1,3 +1,17 @@
 __pycache__
 conf.py
 stats*.json
+
+games/build/
+games/dist/
+games/MOT_Bot_Games.egg-info
+
+
+
+games/setup.py
+
+games/moviegame/__init__.py
+
+games/numbergame/__init__.py
+
+games/wordle/__init__.py

@@ -1,9 +1,13 @@
-from games.wordle.exceptions import GameOverEx, GuessEx
-from games.wordle.wordle import wordle
-from main_commands import log_input, send_message
+from .exceptions import GameOverEx, GuessEx
+from .wordle import wordle
+
 from telegram import Message, Update
 from telegram.ext import CallbackContext
 import json
+from datetime import datetime
+
+def log_input(update):
+    print(f"[{datetime.now()}] {str(update.message.chat_id)} : '{update.message.text}'")
 
 # Class for caching sent messages
 class GameMessage(wordle):

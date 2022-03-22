@@ -1,5 +1,5 @@
-from games.wordle.exceptions import GuessEx, LoseEx, WinEx
-from games.wordle.wordlist import check_if_word_exists, get_random_word
+from .exceptions import GuessEx, LoseEx, WinEx
+from .wordlist import check_if_word_exists, get_random_word
 import json
 
 statsPath = "games\wordle\stats.json"

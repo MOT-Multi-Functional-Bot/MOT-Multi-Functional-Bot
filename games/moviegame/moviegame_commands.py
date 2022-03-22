@@ -1,7 +1,10 @@
-from games.moviegame.moviequiz import Quiz
-from main_commands import log_input
+from .moviequiz import Quiz
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import CallbackContext, ConversationHandler
+from datetime import datetime
+
+def log_input(update):
+    print(f"[{datetime.now()}] {str(update.message.chat_id)} : '{update.message.text}'")
 
 PLAYMODE, GUESS = range(2)
 
