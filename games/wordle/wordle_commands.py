@@ -1,6 +1,6 @@
-from games.wordle.exceptions import GameOverEx, GuessEx
-from games.wordle.wordle import wordle
-from main_commands import log_input, send_message
+from .exceptions import GameOverEx, GuessEx
+from .wordle import wordle
+from .helperfunctions import log_input, send_message
 from telegram import Message, Update
 from telegram.ext import CallbackContext
 import json

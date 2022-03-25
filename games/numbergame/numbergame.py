@@ -1,4 +1,4 @@
-from games.numbergame.exceptions import GuessEx, WinEx
+from .exceptions import GuessEx, WinEx
 import random
 
 
