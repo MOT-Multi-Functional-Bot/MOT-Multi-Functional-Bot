@@ -1,5 +1,8 @@
 from .exceptions import GuessEx, WinEx
 
-class tictactoeGame():
+class tictactoeGameClass():
     def __init__(self) -> None:
-        pass
+        self.state = 0
+        self.cache = {}
+
+
