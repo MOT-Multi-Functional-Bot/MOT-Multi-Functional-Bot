@@ -1,7 +1,7 @@
+import random
 from telegram import Update, Message
 from telegram.ext import CallbackContext
 from .helperfunctions import log_input
-import random
 
 
 global gAllLines, gPlayers
