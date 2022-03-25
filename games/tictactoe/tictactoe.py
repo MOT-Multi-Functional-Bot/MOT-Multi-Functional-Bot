@@ -8,18 +8,15 @@ global gAllLines, gPlayers
 gPlayers = [0, 1]
 
 
-class tictactoeGameClass:
+class tictactoeclass:
     def __init__(self) -> None:
         self.states = 0
         self.cache = {}
 
 
-# Functions:
-
-
-def set_bits(Bits):
+def set_bits(bits):
     result = 0
-    for b in Bits:
+    for b in bits:
         result |= 1 << b
     return result
 
@@ -56,20 +53,20 @@ def to_board(states):
 
 # returns the set of empty fields
 def empty(states):
-    Free = {n for n in range(9)}
-    Free -= {n for n in range(9) if states & (1 << n) != 0}
-    Free -= {n for n in range(9) if states & (1 << (9 + n)) != 0}
-    return Free
+    free_tiles = {n for n in range(9)}
+    free_tiles -= {n for n in range(9) if states & (1 << n) != 0}
+    free_tiles -= {n for n in range(9) if states & (1 << (9 + n)) != 0}
+    return free_tiles
 
 
 # calculate all possible next states, reachable from the current state, depending on the empty fields
 def next_states(states, player):
-    Empty = empty(states)
-    Result = []
-    for n in Empty:
+    empty_states = empty(states)
+    result = []
+    for n in empty_states:
         next_state = states | set_bit(player * 9 + n)
-        Result.append(next_state)
-    return Result
+        result.append(next_state)
+    return result
 
 
 # returns wether the user or the computer wins
@@ -90,37 +87,22 @@ def finished(states):
     return utility(states) != None
 
 
-# Gets the users input
-# def get_move(state, update):
-#     try:
-#         row, col = input('Move eingeben bitte: ').split(',')
-#         row, col = int(row), int(col)
-#         mask = set_bit(9 + row * 3 + col)
-#         if state & mask == 0:
-#             return state | mask
-#         update.message.reply_text("Nicht cheaten.")
-#     except:
-#         update.message.reply_text('Illegaler Input.')
-#         update.message.reply_text(
-#             'Reihen und Zeilen sind Elemente aus: {0,1,2}.')
-
-
 def final_msg(states, update):
     if finished(states):
         if utility(states) == -1:
-            update.message.reply_text("Du hast gewonnen!")
+            update.message.reply_text("You won!")
         elif utility(states) == 1:
-            update.message.reply_text("Der Computer hat gewonnen")
+            update.message.reply_text("The computer won!")
         else:
-            update.message.reply_text("Unentschieden")
+            update.message.reply_text("It's a draw!")
 
 
 def best_move(game):
     NS = next_states(game.states, gPlayers[0])
-    bestValue = evaluate(game.states, game, maxValue, -1, 1)
-    BestMoves = [s for s in NS if evaluate(s, game, minValue, -1, 1) == bestValue]
-    BestState = random.choice(BestMoves)
-    return bestValue, BestState
+    best_value = evaluate(game.states, game, max_value, -1, 1)
+    best_moves = [s for s in NS if evaluate(s, game, min_value, -1, 1) == best_value]
+    best_state = random.choice(best_moves)
+    return best_value, best_state
 
 
 def evaluate(states, game, f, alpha=-1, beta=1):
@@ -166,35 +148,30 @@ def store_cache(game, states, alpha, beta, v):
         game.cache[states] = ("≥", v)
 
 
-def maxValue(states, game, alpha, beta):
+def max_value(states, game, alpha, beta):
     if finished(states):
         return utility(states)
     if alpha >= beta:
         return alpha
     v = alpha
     for ns in next_states(states, gPlayers[0]):
-        v = max(v, evaluate(ns, game, minValue, v, beta))
+        v = max(v, evaluate(ns, game, min_value, v, beta))
         if v >= beta:
             return v
     return v
 
 
-def minValue(states, game, alpha, beta):
+def min_value(states, game, alpha, beta):
     if finished(states):
         return utility(states)
     if beta <= alpha:
         return beta
     v = beta
     for ns in next_states(states, gPlayers[1]):
-        v = min(v, evaluate(ns, game, maxValue, alpha, v))
+        v = min(v, evaluate(ns, game, max_value, alpha, v))
         if v <= alpha:
             return v
     return v
-
-
-# ==========================================================================
-# ==========================================================================
-# ==========================================================================
 
 
 def send_message(update: Update, text: str) -> Message:
@@ -217,14 +194,13 @@ def check_game_status(chat_id: int) -> bool:
     return running_games.get(chat_id) is not None
 
 
-class GameMessage(tictactoeGameClass):
+class GameMessage(tictactoeclass):
     def __init__(self, message: Message):
         super().__init__()
         self.err_msg = ""
         self.message = message
 
     def status(self):
-        # message = super().state()
         message = f"\n\n{self.err_msg}"
         self.err_msg = ""
         return message
@@ -235,7 +211,7 @@ class GameMessage(tictactoeGameClass):
 
 
 # Main command
-def tictactoeGame(update: Update, context: CallbackContext) -> None:
+def tictactoegame(update: Update, context: CallbackContext) -> None:
     """Play the tictactoeGame"""
     log_input(update)
     global running_games
@@ -247,17 +223,17 @@ def tictactoeGame(update: Update, context: CallbackContext) -> None:
     running_games[update.effective_chat.id] = GameMessage(
         send_message(
             update,
-            "Let's start, I choose my Position! \nUse /pos 'Position [0-2],[0-2]' to start by setting your position!",
+            "Let's start, I choose my Position! \nUse /pos 'Position [1-3],[1-3]' to start by setting your position!",
         )
     )
 
 
-def pcPlay(update: Update):
+def pc_play(update: Update):
     global running_games
     game = running_games[update.effective_chat.id]
-    val, State = best_move(game)
-    x = to_board(State)
-    game.states = State
+    val, state = best_move(game)
+    x = to_board(state)
+    game.states = state
     update.message.reply_text(x)
     if finished(game.states):
         final_msg(game.states, update)
@@ -274,58 +250,49 @@ def pos(update: Update, context: CallbackContext):
 
     player_input = " ".join(context.args).split(",")
 
-    if player_input == "":
-        send_message(update, "Set your position with: /pos [0-2],[0-2]")
+    if len(player_input) == 0:
+        send_message(update, "Set your position with: /pos [1-3],[1-3]")
         return
 
     game = running_games[update.effective_chat.id]
 
-    # userid = str(update.message.chat_id)
-
     try:
         row, col = player_input
         row, col = int(row), int(col)
-        isValidInput(row, col, update)
+        row -= 1
+        col -= 1
+        is_valid_input(row, col, update)
         mask = set_bit(9 + row * 3 + col)
         mask2 = set_bit(row * 3 + col)
-        print(f"MASKE = {bin(mask)}")
         if game.states & mask == 0 and game.states & mask2 == 0:
             x = game.states | mask
             game.states = x
-            # update.message.reply_text(to_board(x))
             if finished(game.states):
                 update.message.reply_text(final_msg(game.states, update))
                 del running_games[update.effective_chat.id]
 
             else:
-                pcPlay(update)
+                pc_play(update)
         else:
-            raise update.message.reply_text("Nicht cheaten.")
+            raise update.message.reply_text("Don't cheat!")
     except:
         if not finished(game.states):
             update.message.reply_text("🚨 Cheater 🚨")
-            update.message.reply_text(
-                'A valid input would be "/pos [0-2],[0-2]"\nTry again :)'
-            )
+            update.message.reply_text('A valid input would be "/pos [1-3],[1-3]"\nTry again :)')
+            raise
 
 
-def isValidInput(row, col, update):
+def is_valid_input(row, col, update):
     if row > 2:
-        update.message.reply_text(
-            "Your input was invalid: your row should be in range of 0-2"
-        )
+        update.message.reply_text("Your input was invalid: your row should be in range of 1-3")
         raise
 
     elif col > 2:
-        update.message.reply_text(
-            "Your input was invalid: your row should be in range of 0-2"
-        )
+        update.message.reply_text("Your input was invalid: your column should be in range of 1-3")
         raise
 
     elif row < 0 or col < 0:
-        update.message.reply_text(
-            "Your input was invalid: row and col must be in range of 0-2"
-        )
+        update.message.reply_text("Your input was invalid: row and col must be in range of 1-3")
         raise
 
 
