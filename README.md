@@ -74,7 +74,8 @@ python3 main.py
 ## Use our Python Package
 
 - You can use our python package by following the installation instructions on [MOT-Bot-Game Package](https://test.pypi.org/project/MOT-Bot-Games/)
-- After installing the package you can use the following commands to get startet with the individual games:
+- After installing the package you can use the following commands to get started with the individual games:
+
 ```python
 import moviegame
 import numbergame

@@ -5,9 +5,6 @@ from .numbergame import numbergame
 from .helperfunctions import log_input, send_message
 
 
-
-
-
 class GameMessage(numbergame):
     def __init__(self, message: Message):
         super().__init__()

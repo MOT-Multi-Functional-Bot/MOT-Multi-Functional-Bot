@@ -1,6 +1,7 @@
 from datetime import datetime
 from telegram import Update, Message
 
+
 def log_input(update):
     print(f"[{datetime.now()}] {str(update.message.chat_id)} : '{update.message.text}'")
 
