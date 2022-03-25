@@ -5,13 +5,13 @@
 </p>
 
 <div align="center">
-    <small>Built by:
+    Built by:
         <a href="https://github.com/lea-s">Lea</a>,
         <a href="https://github.com/natibckr">Natascha</a>,
         <a href="https://github.com/fulachs">Felix</a>,
         <a href="https://github.com/nowo2000">Noah</a> and all
         <a href="https://github.com/NoWo2000/MOT-Multi-Functional-Bot/graphs/contributors">contributors</a>
-    </small>
+    
 </div>
 
 <br>
@@ -71,42 +71,9 @@ python3 main.py
 
 - To get all the functionalities type `/help`. For further information visit the [MOT-Bot Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki) page.
 
-## Use our Python Package
-
-- You can use our python package by following the installation instructions on [MOT-Bot-Game Package](https://test.pypi.org/project/MOT-Bot-Games/)
-- After installing the package you can use the following commands to get startet with the individual games:
-```python
-import moviegame
-import numbergame
-import wordle
-```
-
 # You need help or further information of this repo?
 
 In case Commandos or other things are not clear, there is a detailed documentation of our repo under the Wiki tab.
 Or if you have any other questions about technology decisions, or you have questions about tools or scaling the bot, check out the wiki page. [MOT-Bot Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki)
 
-# Project history
 
-```mermaid
-
- flowchart TD
-    A[MOT Idea] --> B{What programming language/framework?};
-    B -- Deno / Typescript --> C[Telegram libraries not good enough];
-    B -- Python --> D[Good Telegram Libraries];
-    D --> E[Large community];
-    E --> F[Good for calculation ];
-    F --> G{What should the MOT do?};
-    G -- Problems --> H[Bug];
-    H --> I[Block commands in a Telegrambot];
-    I --> J[Asked question on Stack Overflow];
-    G -- Finished --> K[Bigger Smaller Numbers Game];
-    G -- Finished --> L[Movies guessing with emojis];
-    G -- Finished --> M[Wordle];
-    G -- In Progress --> N[TicTacToe];
-    K --> O[Merged into Main Branch];
-    L --> O;
-    M --> O;
-
-
-```
