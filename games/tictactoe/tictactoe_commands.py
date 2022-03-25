@@ -3,7 +3,7 @@ from multiprocessing import get_start_method
 from telegram import Game, Update, Message
 from telegram.ext import CallbackContext
 from .exceptions import GameOverEx, GuessEx
-from .tictactoe import tictactoeGameClass
+#from .tictactoe import tictactoeGameClass
 from main_commands import log_input
 import random
 
@@ -11,6 +11,11 @@ import random
 global gAllLines, gPlayers
 gPlayers = [0, 1]
 
+
+class tictactoeGameClass():
+    def __init__(self) -> None:
+        self.states = 0
+        self.cache = {}
 
 # Functions:
 
@@ -35,12 +40,12 @@ gAllLines = [set_bits([0, 1, 2]),
              ]
 
 # to_Board sets '⭕', '✖', '⬜' depending on the binary representation
-def to_board(state):
+def to_board(states):
     result = ''
     for cell in range(9):
-        if state & (2 ** cell) != 0:
+        if states & (2 ** cell) != 0:
             result += '✖'
-        elif state & (2 ** (cell + 9)) != 0:
+        elif states & (2 ** (cell + 9)) != 0:
             result += '⭕'
         else:
             result += '⬜'
@@ -49,36 +54,36 @@ def to_board(state):
     return result
 
 # returns the set of empty fields
-def empty(state):
+def empty(states):
     Free = {n for n in range(9)}
-    Free -= {n for n in range(9) if state & (1 << n) != 0}
-    Free -= {n for n in range(9) if state & (1 << (9 + n)) != 0}
+    Free -= {n for n in range(9) if states & (1 << n) != 0}
+    Free -= {n for n in range(9) if states & (1 << (9 + n)) != 0}
     return Free
 
 # calculate all possible next states, reachable from the current state, depending on the empty fields
-def next_states(state, player):
-    Empty = empty(state)
+def next_states(states, player):
+    Empty = empty(states)
     Result = []
     for n in Empty:
-        next_state = state | set_bit(player * 9 + n)
+        next_state = states | set_bit(player * 9 + n)
         Result.append(next_state)
     return Result
 
 # returns wether the user or the computer wins
-def utility(state):
+def utility(states):
     for mask in gAllLines:
-        if state & mask == mask:
+        if states & mask == mask:
             return 1
-        if (state >> 9) & mask == mask:
+        if (states >> 9) & mask == mask:
             return -1
     # bin(511) = '0b111111111' --> checks wether all fields are occupied and therefore wether the game is finished
-    if (state & 511) | (state >> 9) != 511:
+    if (states & 511) | (states >> 9) != 511:
         return None
     return 0
 
 # Is the game over in the current state
-def finished(state):
-    return utility(state) != None
+def finished(states):
+    return utility(states) != None
 
 # Gets the users input
 # def get_move(state, update):
@@ -95,11 +100,11 @@ def finished(state):
 #             'Reihen und Zeilen sind Elemente aus: {0,1,2}.')
 
 
-def final_msg(state, update):
-    if finished(state):
-        if utility(state) == -1:
+def final_msg(states, update):
+    if finished(states):
+        if utility(states) == -1:
             update.message.reply_text('Du hast gewonnen!')
-        elif utility(state) == 1:
+        elif utility(states) == 1:
             update.message.reply_text('Der Computer hat gewonnen')
         else:
             update.message.reply_text("Unentschieden")
@@ -107,79 +112,79 @@ def final_msg(state, update):
     return False
 
 
-def best_move(State):
-    NS = next_states(State, gPlayers[0])
-    bestValue = evaluate(State, maxValue, -1, 1)
-    BestMoves = [s for s in NS if evaluate(s, minValue, -1, 1) == bestValue]
+def best_move(game):
+    NS = next_states(game.states, gPlayers[0])
+    bestValue = evaluate(game.states, game, maxValue, -1, 1)
+    BestMoves = [s for s in NS if evaluate(s, game, minValue, -1, 1) == bestValue]
     BestState = random.choice(BestMoves)
     return bestValue, BestState
 
 
-def evaluate(game, f, alpha=-1, beta=1):
+def evaluate(states, game, f, alpha=-1, beta=1):
     print(f'game =  {game}')
-    if game.state in game.cache:
-        flag, v = game.cache[game.state]
+    if states in game.cache:
+        flag, v = game.cache[states]
         if flag == '=':
             return v
         if flag == '≤':
             if v <= alpha:
                 return v
             elif alpha < v < beta:
-                w = f(game.state, alpha, v)
-                store_cache(game.state, alpha, v, w)
+                w = f(states, game, alpha, v)
+                store_cache(game, states, alpha, v, w)
                 return w
             else:
-                w = f(game.state, alpha, beta)
-                store_cache(game.state, alpha, beta, w)
+                w = f(states, game, alpha, beta)
+                store_cache(game, states, alpha, beta, w)
                 return w
         if flag == '≥':
             if beta <= v:
                 return v
             elif alpha < v < beta:
-                w = f(game.state, v, beta)
-                store_cache(game.state, v, beta, w)
+                w = f(states, game, v, beta)
+                store_cache(game, states, v, beta, w)
                 return w
             else:
-                w = f(game.state, alpha, beta)
-                store_cache(game.state, alpha, beta, w)
+                w = f(states, game, alpha, beta)
+                store_cache(game, states, alpha, beta, w)
                 return w
     else:
-        v = f(game.state, alpha, beta)
-        store_cache(game.state, alpha, beta, v)
+        v = f(states, game, alpha, beta)
+        store_cache(game, states, alpha, beta, v)
         return v
 
 
-def store_cache(game, alpha, beta, v):
+def store_cache(game,states, alpha, beta, v):
     
     if v <= alpha:
-        game.cache[game.state] = ('≤', v)
+        game.cache[states] = ('≤', v)
     elif v < beta:
-        game.cache[game.state] = ('=', v)
+        game.cache[states] = ('=', v)
     else:
-        game.cache[game.state] = ('≥', v)
+        game.cache[states] = ('≥', v)
 
 
-def maxValue(State, alpha, beta):
-    if finished(State):
-        return utility(State)
+def maxValue(states, game, alpha, beta):
+    if finished(states):
+        return utility(states)
     if alpha >= beta:
         return alpha
     v = alpha
-    for ns in next_states(State, gPlayers[0]):
-        v = max(v, evaluate(ns, minValue, v, beta))
+    for ns in next_states(states, gPlayers[0]):
+        v = max(v, evaluate(ns, game, minValue, v, beta))
         if v >= beta:
             return v
     return v
 
 
-def minValue(State, alpha, beta):
-    if finished(State):
-        return utility(State)
+def minValue(states, game, alpha, beta):
+    if finished(states):
+        return utility(states)
     if beta <= alpha:
         return beta
     v = beta
-    for ns in next_states(State, gPlayers[1]):
-        v = min(v, evaluate(ns, maxValue, alpha, v))
+    for ns in next_states(states, gPlayers[1]):
+        v = min(v, evaluate(ns, game, maxValue, alpha, v))
         if v <= alpha:
             return v
     return v
@@ -216,8 +221,8 @@ class GameMessage(tictactoeGameClass):
         self.message = message
 
     def status(self):
-        message = super().state()
-        message += f"\n\n{self.err_msg}"
+        #message = super().state()
+        message = f"\n\n{self.err_msg}"
         self.err_msg = ""
         return message
 
@@ -244,17 +249,18 @@ def tictactoeGame(update: Update, context: CallbackContext) -> None:
     )
 
 def pcPlay(update: Update):
-    log_input(update)
     global running_games
     game = running_games[update.effective_chat.id]
-    val, State = best_move(game.state)
+    val, State = best_move(game)
     x = to_board(State)
+    game.states = State
     #print(x)
     update.message.reply_text(x)
-    if finished(game.state):
-        final_msg(game.state, update)
-        update.message.reply_text(final_msg(game.state, update))
+    if finished(game.states):
+        final_msg(game.states, update)
+        update.message.reply_text(final_msg(game.states, update))
         del running_games[update.effective_chat.id]
+    game.status()
 
 
 def pos(update: Update, context: CallbackContext):
@@ -279,9 +285,9 @@ def pos(update: Update, context: CallbackContext):
         row, col = player_input
         row, col = int(row), int(col)
         mask = set_bit(9 + row * 3 + col)
-        if game.state & mask == 0:
-            x = game.state | mask
-        
+        if game.states & mask == 0:
+            x = game.states | mask
+            game.states = x    
         update.message.reply_text("Nicht cheaten.")
     except:
         update.message.reply_text('Illegaler Input.')
@@ -290,11 +296,11 @@ def pos(update: Update, context: CallbackContext):
 
     update.message.reply_text(to_board(x))
 
-    if finished(game.state):
-        final_msg(game.state, update)
-        update.message.reply_text(final_msg(game.state, update))
+    if finished(game.states):
+        final_msg(game.states, update)
+        update.message.reply_text(final_msg(game.states, update))
         del running_games[update.effective_chat.id]
-
+    
     else:
         pcPlay(update)
 
