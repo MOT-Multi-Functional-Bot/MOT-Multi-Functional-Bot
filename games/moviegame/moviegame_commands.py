@@ -1,5 +1,5 @@
-from games.moviegame.moviequiz import Quiz
-from main_commands import log_input
+from .moviequiz import Quiz
+from .helperfunctions import log_input
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import CallbackContext, ConversationHandler
 
