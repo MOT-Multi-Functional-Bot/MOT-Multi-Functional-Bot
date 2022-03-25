@@ -223,7 +223,7 @@ def tictactoegame(update: Update, context: CallbackContext) -> None:
     running_games[update.effective_chat.id] = GameMessage(
         send_message(
             update,
-            "Let's start, I choose my Position! \nUse /pos 'Position [1-3],[1-3]' to start by setting your position!",
+            "✖⭕ Let's start and set your position! ⭕✖ \nUse '/pos [1-3],[1-3]' to start by setting your position!",
         )
     )
 
