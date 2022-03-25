@@ -77,10 +77,14 @@ python3 main.py
 - After installing the package you can use the following commands to get started with the individual games:
 
 ```python
+pip install -i https://test.pypi.org/simple/ MOT-Bot-Games
+
 import moviegame
 import numbergame
 import wordle
+import tictactoe
 ```
+- For more information, feel free to check out our [Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki).
 
 # You need help or further information of this repo?
 
@@ -104,7 +108,7 @@ Or if you have any other questions about technology decisions, or you have quest
     G -- Finished --> K[Bigger Smaller Numbers Game];
     G -- Finished --> L[Movies guessing with emojis];
     G -- Finished --> M[Wordle];
-    G -- In Progress --> N[TicTacToe];
+    G -- Finished --> N[TicTacToe];
     K --> O[Merged into Main Branch];
     L --> O;
     M --> O;
