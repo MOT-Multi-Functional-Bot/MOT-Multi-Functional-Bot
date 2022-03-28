@@ -3,6 +3,7 @@ conf.py
 stats*.json
 
 .vscode/settings.json
+# Package files
 games/build/*
 games/dist/*
 games/MOT_Bot_Games.egg-info/*
