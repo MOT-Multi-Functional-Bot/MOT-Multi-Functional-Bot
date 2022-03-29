@@ -84,6 +84,7 @@ import numbergame
 import wordle
 import tictactoe
 ```
+
 - For more information, feel free to check out our [Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki).
 
 # You need help or further information of this repo?

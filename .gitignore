@@ -1,7 +1,6 @@
 __pycache__
 conf.py
 stats*.json
-
 .vscode/settings.json
 # Package files
 games/build/*

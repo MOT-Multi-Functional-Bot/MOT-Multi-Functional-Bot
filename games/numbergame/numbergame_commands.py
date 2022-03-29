@@ -17,7 +17,7 @@ class GameMessage(numbergame):
         self.err_msg = ""
         return message
 
-    # Update the statis message for the player
+    # Update the static message for the player
     def update_message(self):
         edit_message(self.message, self.status())
 
