@@ -2,6 +2,8 @@ import unittest
 from games.moviegame.moviegame_commands import *
 from games.moviegame.moviequiz import *
 from testing.test_moviegame.test_moviegamesupdates import *
+import games.moviegame.runninggames
+
 
 class Test_moviegame_commands(unittest.TestCase):
     def __init__(self, methodName: str = ...) -> None:
@@ -9,7 +11,7 @@ class Test_moviegame_commands(unittest.TestCase):
         # self.update = None
         #self.message = messagemovie
         self.update = Updatesmovie(messagemovie, chatmovie)
-        self.running_MovieGames = {}
+        self.running_MovieGames = games.moviegame.runninggames.runninggames
         # self.update.effective_chat_id = None
 
     def test_movieguessinggame(self):
@@ -60,6 +62,8 @@ class Test_moviegame_commands(unittest.TestCase):
 
         # testing the stopgame function
         self.update.message.text = "stopgame"
+        self.update.effective_chat.id = 6
+        self.running_MovieGames[6] = Quiz()
         self.assertEqual(stopgame(self.update, context=CallbackContext), ConversationHandler.END)
 
 

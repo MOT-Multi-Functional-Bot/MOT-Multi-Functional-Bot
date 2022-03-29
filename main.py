@@ -39,6 +39,7 @@ def main() -> None:
 
     # movieguessinggame Commands
     dispatcher.add_handler(movie_guessing_game)
+    dispatcher.add_handler(CommandHandler("stopgame", stopgame))
 
     # Numbergame Commands
     dispatcher.add_handler(CommandHandler("numb", numb))
