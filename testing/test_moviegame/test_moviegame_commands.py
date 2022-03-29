@@ -53,17 +53,25 @@ class Test_moviegame_commands(unittest.TestCase):
         self.running_MovieGames[4].playmodus = "Hard"
         self.assertEqual(movieguess(self.update, context=CallbackContext), 1)
 
-        # right answer in hard playmode
+        # wrong answer in hard playmode exceeding the number of guesses allowed        
+        self.update.message.text = "Das ist Falsch"
         self.update.effective_chat.id = 5
         self.running_MovieGames[5] = Quiz()
-        self.update.message.text = self.running_MovieGames[5].answer
         self.running_MovieGames[5].playmodus = "Hard"
+        self.running_MovieGames[5].guesscount = 5
+        self.assertEqual(movieguess(self.update, context=CallbackContext), ConversationHandler.END)
+
+        # right answer in hard playmode
+        self.update.effective_chat.id = 6
+        self.running_MovieGames[6] = Quiz()
+        self.update.message.text = self.running_MovieGames[6].answer
+        self.running_MovieGames[6].playmodus = "Hard"
         self.assertEqual(movieguess(self.update, context=CallbackContext), ConversationHandler.END)
 
         # testing the stopgame function
         self.update.message.text = "stopgame"
-        self.update.effective_chat.id = 6
-        self.running_MovieGames[6] = Quiz()
+        self.update.effective_chat.id = 7
+        self.running_MovieGames[7] = Quiz()
         self.assertEqual(stopgame(self.update, context=CallbackContext), ConversationHandler.END)
 
 
@@ -73,3 +81,4 @@ if __name__ == '__main__':
 
 # HOW TO RUN THE TEST:
 # python -m unittest testing/test_moviegame.test_moviegame_commands.py
+# Windows: python3 -m unittest .\testing\test_moviegame\test_moviegame_commands.py
