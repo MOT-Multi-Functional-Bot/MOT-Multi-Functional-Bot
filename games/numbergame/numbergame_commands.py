@@ -1,12 +1,8 @@
 from telegram import Update, Message
 from telegram.ext import CallbackContext
-from games.numbergame.exceptions import GameOverEx, GuessEx
-from games.numbergame.numbergame import numbergame
-from main_commands import log_input
-
-
-def send_message(update: Update, text: str) -> Message:
-    return update.message.reply_text(text)
+from .exceptions import GameOverEx, GuessEx
+from .numbergame import numbergame
+from .helperfunctions import log_input, send_message
 
 
 class GameMessage(numbergame):
@@ -21,7 +17,7 @@ class GameMessage(numbergame):
         self.err_msg = ""
         return message
 
-    # Update the statis message for the player
+    # Update the static message for the player
     def update_message(self):
         edit_message(self.message, self.status())
 
