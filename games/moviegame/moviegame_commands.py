@@ -2,11 +2,11 @@ from .moviequiz import Quiz
 from .helperfunctions import log_input
 from telegram import Update, ReplyKeyboardMarkup
 from telegram.ext import CallbackContext, ConversationHandler
-import games.moviegame.runninggames
+from .runninggames import *
 
 PLAYMODE, GUESS = range(2)
 global running_MovieGames
-running_MovieGames = games.moviegame.runninggames.runninggames
+running_MovieGames = runninggames
 
 
 # movieguessinggame --> entry point for the ConversationHandler starts the Movie Guessing Game

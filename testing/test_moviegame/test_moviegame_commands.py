@@ -2,14 +2,14 @@ import unittest
 from games.moviegame.moviegame_commands import *
 from games.moviegame.moviequiz import *
 from testing.test_moviegame.test_moviegamesupdates import *
-import games.moviegame.runninggames
+from games.moviegame.runninggames import *
 
 
 class Test_moviegame_commands(unittest.TestCase):
     def __init__(self, methodName: str = ...) -> None:
         super().__init__(methodName)
         self.update = Updatesmovie(messagemovie, chatmovie)
-        self.running_MovieGames = games.moviegame.runninggames.runninggames
+        self.running_MovieGames = runninggames
 
     def test_movieguessinggame(self):
         # starting a game with no game running
