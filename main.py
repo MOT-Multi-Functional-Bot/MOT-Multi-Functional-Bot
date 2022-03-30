@@ -2,6 +2,7 @@ from conf import API_KEY
 from games.moviegame.moviegame_commands import GUESS, PLAYMODE, movieguess, movieguessinggame, playmode, stopgame
 from games.numbergame.numbergame_commands import numb, stopnumbergame, numbergame, newnum
 from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
+from games.tictactoe.tictactoe import stoptictactoe, tictactoegame, pos
 from main_commands import cat, echo, help, noodle, start
 from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
 
@@ -46,6 +47,11 @@ def main() -> None:
     dispatcher.add_handler(CommandHandler("stopnumbergame", stopnumbergame))
     dispatcher.add_handler(CommandHandler("numbergame", numbergame))
     dispatcher.add_handler(CommandHandler("newnum", newnum))
+
+    # TicTacToe Commands
+    dispatcher.add_handler(CommandHandler("tic", tictactoegame))
+    dispatcher.add_handler(CommandHandler("stoptic", stoptictactoe))
+    dispatcher.add_handler(CommandHandler("pos", pos))
 
     # on non command i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))

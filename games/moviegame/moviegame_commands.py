@@ -1,8 +1,9 @@
 from .moviequiz import Quiz
-from main_commands import log_input
+from .helperfunctions import log_input
+from .runninggames import *
 from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import CallbackContext, ConversationHandler
-from .runninggames import *
+
 
 PLAYMODE, GUESS = range(2)
 global running_MovieGames
