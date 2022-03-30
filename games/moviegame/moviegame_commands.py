@@ -1,8 +1,9 @@
 from .moviequiz import Quiz
 from .helperfunctions import log_input
-from telegram import Update, ReplyKeyboardMarkup
-from telegram.ext import CallbackContext, ConversationHandler
 from .runninggames import *
+from telegram import Update, ReplyKeyboardMarkup, ReplyKeyboardRemove
+from telegram.ext import CallbackContext, ConversationHandler
+
 
 PLAYMODE, GUESS = range(2)
 global running_MovieGames
@@ -12,12 +13,13 @@ running_MovieGames = runninggames
 # movieguessinggame --> entry point for the ConversationHandler starts the Movie Guessing Game
 def movieguessinggame(update: Update, context: CallbackContext) -> int:
     """Movie guessing Game"""
-    # log_input(update)
+    log_input(update)
     if update.effective_chat.id in running_MovieGames.keys():
         update.message.reply_text(
             "There is already a game running, if you want to start a new game enter /stopgame and then /movieguessinggame."
         )
     else:
+        running_MovieGames[update.effective_chat.id] = Quiz()
         reply_keyboard = [["Easy", "Hard"]]
         update.message.reply_text(
             "You have started the movie guessing game!\n\n"
@@ -33,8 +35,7 @@ def movieguessinggame(update: Update, context: CallbackContext) -> int:
 
 # playMode --> handles the users playMode choice and creates a Quiz object for the user which contains information on the users Movie Guessing Game
 def playmode(update: Update, context: CallbackContext) -> int:
-    # log_input(update)
-    running_MovieGames[update.effective_chat.id] = Quiz()
+    log_input(update)
 
     update.message.reply_text("You chose " + update.message.text + " mode")
     if update.message.text == "Easy":
@@ -67,7 +68,7 @@ def playmode(update: Update, context: CallbackContext) -> int:
 
 # movieGuess --> handles the users guesses within their respective playmode and eventually ends the game
 def movieguess(update: Update, context: CallbackContext) -> None:
-    # log_input(update)
+    log_input(update)
     if running_MovieGames[update.effective_chat.id].playmodus == "Easy":
         if update.message.text != running_MovieGames[update.effective_chat.id].answer:
             update.message.reply_text(
@@ -106,12 +107,12 @@ def movieguess(update: Update, context: CallbackContext) -> None:
 
 # stopgame --> enables the user to stop the game even if it is not yet finished
 def stopgame(update: Update, context: CallbackContext) -> int:
-    # log_input(update)
+    log_input(update)
     if update.effective_chat.id not in running_MovieGames:
         update.message.reply_text(
             "There is no game running. If you wish to start a Movie Guessing game please enter '/movieguessinggame'."
         )
     else:
-        update.message.reply_text("You ended the game")
+        update.message.reply_text("You ended the game", reply_markup=ReplyKeyboardRemove())
         del running_MovieGames[update.effective_chat.id]
         return ConversationHandler.END
