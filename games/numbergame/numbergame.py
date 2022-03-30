@@ -68,14 +68,14 @@ class numbergame:
         if self.reset:
             raise GuessEx("You already did one reset! No more resets for you!")
 
-        self.reset = True
-        self.newrange = int(guess)
-
         if not guess.isnumeric():
             raise GuessEx("The new number is not a number")
 
         if int(guess) > 1000000 or int(guess) < 0:
             raise GuessEx("Your range is to big, the maximum is 1.000.000")
+        
+        self.reset = True
+        self.newrange = int(guess)
 
         self.tries = 0
         self.selected_number = get_random_number(int(guess))
