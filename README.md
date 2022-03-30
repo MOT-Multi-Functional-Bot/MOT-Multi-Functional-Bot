@@ -57,7 +57,7 @@ Create your own MOT:
 - Clone this repository
 - Install all requirements:
 
-```bash
+```python
 pip3 install -r requirements.txt --upgrade
 ```
 
@@ -65,7 +65,7 @@ pip3 install -r requirements.txt --upgrade
   - If you don't know how to do this open the `conf.template.py` and read the instructions.
 - To run the bot go to your console and type:
 
-```bash
+```python
 python3 main.py
 ```
 
@@ -113,6 +113,9 @@ Or if you have any other questions about technology decisions, or you have quest
     K --> O[Merged into Main Branch];
     L --> O;
     M --> O;
+    N --> O;
+    O --> P[Created package];
+    P --> Q[Main Branch is running with package imports];
 
 
 ```
