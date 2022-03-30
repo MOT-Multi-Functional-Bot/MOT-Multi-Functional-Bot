@@ -73,7 +73,7 @@ class numbergame:
 
         if int(guess) > 1000000 or int(guess) < 0:
             raise GuessEx("Your range is to big, the maximum is 1.000.000")
-        
+
         self.reset = True
         self.newrange = int(guess)
 
