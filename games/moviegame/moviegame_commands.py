@@ -36,7 +36,7 @@ def movieguessinggame(update: Update, context: CallbackContext) -> int:
 # playMode --> handles the users playMode choice and creates a Quiz object for the user which contains information on the users Movie Guessing Game
 def playmode(update: Update, context: CallbackContext) -> int:
     log_input(update)
-    
+
     update.message.reply_text("You chose " + update.message.text + " mode")
     if update.message.text == "Easy":
         running_MovieGames[update.effective_chat.id].playmodus = "Easy"

@@ -24,7 +24,7 @@ class Test_moviegame_commands(unittest.TestCase):
 
     def test_playmode(self):
         # testing the choose playmode function
-        self.update.message.text = "Easy"        
+        self.update.message.text = "Easy"
         self.update.message.chat_id = 2
         self.assertEqual(playmode(self.update, context=CallbackContext), 1)
         self.update.message.text = "Easy"
@@ -86,6 +86,7 @@ class Test_moviegame_commands(unittest.TestCase):
         self.update.message.chat_id = 10
         self.update.effective_chat.id = 8
         self.assertEqual(stopgame(self.update, context=CallbackContext), None)
+
 
 if __name__ == "__main__":
     unittest.main()
