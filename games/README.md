@@ -44,7 +44,7 @@ Any further information how to run a MOT, can be found in our [Github Repository
 
 - You can find our Python Package here: [MOT-Bot-Game Package](https://test.pypi.org/project/MOT-Bot-Games/)
 
-- Our Package is based on the [Python Telegram Extension](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.html). To use our Package you need to add each game into the "Commandhandler" in you `main.py` file. You need to import some of the Methods like following:
+- Our package is based on the [Python Telegram Extension](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.html). To use our package you need to add each game into the "Commandhandler" in your `main.py` file. You need to import some of the methods like following:
 
 ```python
 # Imports for all Game Commands
@@ -63,7 +63,7 @@ dispatcher = updater.dispatcher
 pip install -i https://test.pypi.org/simple/ MOT-Bot-Games
 ```
 
-- After installing and importing the package you can use the following commands to get started with the individual games:
+- With the package installd and the telegram extension imported, use the following commands to get started with the individual games:
 
 Here is an example for Numbergame:
 
@@ -75,28 +75,39 @@ dispatcher.add_handler(CommandHandler("stopnumbergame", stopnumbergame))
 dispatcher.add_handler(CommandHandler("numb", numb))
 dispatcher.add_handler(CommandHandler("newnum", newnum))
 ```
+The word with quotes around it, will be the word you use in your telegram chat.
+
 All of oure games have specific methods you have to add to your Command Handler:
 
 
 ### Numbergame:
 
 `numbergame`: start the game
+
 `numb`: guess a number
+
 `stopnumbergame`: stop a running game
+
 `newnum`: set new numberrange
 
 ### Wordle
 
 `wordle`: start the game
+
 `guess`: guess a word
+
 `stop`: stop a running game
+
 `howto`: how to play wordle
+
 `stats`: stats about all your wordle games
 
 ### TicTacToe
 
 `tictactoe`: start the game
+
 `pos`: to set your X
+
 `stoptictactoe`: stop a running game
 
 ### Movie Guessing Game
@@ -120,6 +131,7 @@ dispatcher.add_handler(CommandHandler("stopgame", stopgame))
 The Methods for the MovieGuessingGame are:
 
 `movieguessinggame`: start the game
+
 `stopgame`: stop a running game
 
 
