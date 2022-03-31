@@ -37,58 +37,95 @@
 
 # How to start your own MOT-Bot
 
-You can run our bot directly in python or run it in a docker container!
+Any further information how to run a MOT, can be found in our [GitHub Repository](https://github.com/MOT-Multi-Functional-Bot/MOT-Multi-Functional-Bot)
 
-## Use a docker container
+# Use this Python Package
 
-- Clone the repository
-- Rename the `conf.template.py` to `conf.py` and add your own API-Key.
-  If you don't know how to do this open the `conf.template.py` and read the instructions.
-- Run:
+- You can find our Python Package here: [MOT-Bot-Game Package](https://test.pypi.org/project/MOT-Bot-Games/)
 
-```bash
-   docker-compose up -d
-```
-
-## Run it directly in python
-
-Create your own MOT:
-
-- Clone this repository
-- Install all requirements:
-
-```bash
-pip3 install -r requirements.txt --upgrade
-```
-
-- Rename the `conf.template.py` to `conf.py` and add your personal API-Key.
-  - If you don't know how to do this open the `conf.template.py` and read the instructions.
-- To run the bot go to your console and type:
-
-```bash
-python3 main.py
-```
-
-- To get all the functionalities type `/help`. For further information visit the [MOT-Bot Wiki](https://github.com/MOT-Multi-Functional-Bot/MOT-Multi-Functional-Bot/wiki) page.
-
-## Use our Python Package
-
-- You can use our python package by following the installation instructions on [MOT-Bot-Game Package](https://test.pypi.org/project/MOT-Bot-Games/)
-- After installing the package you can use the following commands to get started with the individual games:
+- Our package is based on the [Python Telegram Extension](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.html). To use our package you need to add each game into the "Commandhandler" in your `main.py` file. You need to import some of the methods like the following:
 
 ```python
-pip install -i https://test.pypi.org/simple/ MOT-Bot-Games
+# Imports for all Game Commands
+from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
 
-import moviegame
-import numbergame
-import wordle
-import tictactoe
+# Create the Updater and pass it your bot's token.
+updater = Updater(API_KEY)
+
+# Get the dispatcher to register handlers
+dispatcher = updater.dispatcher
 ```
 
-- For more information, feel free to check out our [Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki).
+- After preparing your `main.py` you need to install our package:
+
+```bash
+pip install -i https://test.pypi.org/simple/ MOT-Bot-Games
+```
+
+- With the package installed and the telegram library imported, use the following commands to get started with the individual games:
+
+Here is an example for Numbergame:
+
+```python
+from numbergame import numb, stopnumbergame, numbergame, newnum
+
+dispatcher.add_handler(CommandHandler("numbergame", numbergame))
+dispatcher.add_handler(CommandHandler("stopnumbergame", stopnumbergame))
+dispatcher.add_handler(CommandHandler("numb", numb))
+dispatcher.add_handler(CommandHandler("newnum", newnum))
+```
+
+The word with quotes around it, will be the word you use in your telegram chat.
+
+All of our games have specific methods you have to add to your Command Handler:
+
+### Numbergame:
+
+- `numbergame`: start the game
+- `numb`: guess a number
+- `stopnumbergame`: stop a running game
+- `newnum`: set new numberrange
+
+### Wordle
+
+- `wordle`: start the game
+- `guess`: guess a word
+- `stop`: stop a running game
+- `howto`: how to play wordle
+- `stats`: stats about all your wordle games
+
+### TicTacToe
+
+- `tictactoe`: start the game
+- `pos`: to set your X
+- `stoptictactoe`: stop a running game
+
+### Movie Guessing Game
+
+Our Movie Game uses the Conversation Handler of telegram. To import the Handler use the following:
+
+```python
+movie_guessing_game = ConversationHandler(
+       entry_points=[CommandHandler("movieguessinggame", movieguessinggame)],
+       states={
+       PLAYMODE: [MessageHandler(Filters.regex("^(Easy|Hard)$"), playmode)],
+       GUESS: [MessageHandler(Filters.regex("^[\w*\s]*$"), movieguess)],
+       },
+       fallbacks=[CommandHandler("stopgame", stopgame)],
+)
+
+dispatcher.add_handler(movie_guessing_game)
+dispatcher.add_handler(CommandHandler("stopgame", stopgame))
+```
+
+The Methods for the MovieGuessingGame are:
+
+- `movieguessinggame`: start the game
+- `stopgame`: stop a running game
+
+For more information, feel free to check out our [Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki).
 
 # You need help or further information of this repo?
 
 In case Commandos or other things are not clear, there is a detailed documentation of our repo under the Wiki tab.
 Or if you have any other questions about technology decisions, or you have questions about tools or scaling the bot, check out the wiki page. [MOT-Bot Wiki](https://github.com/MOT-Multi-Functional-Bot/MOT-Multi-Functional-Bot/wiki)
-
