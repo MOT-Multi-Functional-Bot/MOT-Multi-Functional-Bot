@@ -39,7 +39,6 @@
 
 Any further information how to run a MOT, can be found in our [Github Repository](https://github.com/MOT-Multi-Functional-Bot/MOT-Multi-Functional-Bot)
 
-
 # Use this Python Package
 
 - You can find our Python Package here: [MOT-Bot-Game Package](https://test.pypi.org/project/MOT-Bot-Games/)
@@ -75,10 +74,10 @@ dispatcher.add_handler(CommandHandler("stopnumbergame", stopnumbergame))
 dispatcher.add_handler(CommandHandler("numb", numb))
 dispatcher.add_handler(CommandHandler("newnum", newnum))
 ```
+
 The word with quotes around it, will be the word you use in your telegram chat.
 
 All of oure games have specific methods you have to add to your Command Handler:
-
 
 ### Numbergame:
 
@@ -124,11 +123,9 @@ The Methods for the MovieGuessingGame are:
 - `movieguessinggame`: start the game
 - `stopgame`: stop a running game
 
-
 For more information, feel free to check out our [Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki).
 
 # You need help or further information of this repo?
 
 In case Commandos or other things are not clear, there is a detailed documentation of our repo under the Wiki tab.
 Or if you have any other questions about technology decisions, or you have questions about tools or scaling the bot, check out the wiki page. [MOT-Bot Wiki](https://github.com/MOT-Multi-Functional-Bot/MOT-Multi-Functional-Bot/wiki)
-
