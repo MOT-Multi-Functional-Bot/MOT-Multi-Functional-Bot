@@ -82,33 +82,24 @@ All of oure games have specific methods you have to add to your Command Handler:
 
 ### Numbergame:
 
-`numbergame`: start the game
-
-`numb`: guess a number
-
-`stopnumbergame`: stop a running game
-
-`newnum`: set new numberrange
+-`numbergame`: start the game
+-`numb`: guess a number
+-`stopnumbergame`: stop a running game
+-`newnum`: set new numberrange
 
 ### Wordle
 
-`wordle`: start the game
-
-`guess`: guess a word
-
-`stop`: stop a running game
-
-`howto`: how to play wordle
-
-`stats`: stats about all your wordle games
+-`wordle`: start the game
+-`guess`: guess a word
+-`stop`: stop a running game
+-`howto`: how to play wordle
+-`stats`: stats about all your wordle games
 
 ### TicTacToe
 
-`tictactoe`: start the game
-
-`pos`: to set your X
-
-`stoptictactoe`: stop a running game
+-`tictactoe`: start the game
+-`pos`: to set your X
+-`stoptictactoe`: stop a running game
 
 ### Movie Guessing Game
 
@@ -130,9 +121,8 @@ dispatcher.add_handler(CommandHandler("stopgame", stopgame))
 
 The Methods for the MovieGuessingGame are:
 
-`movieguessinggame`: start the game
-
-`stopgame`: stop a running game
+-`movieguessinggame`: start the game
+-`stopgame`: stop a running game
 
 
 - For more information, feel free to check out our [Wiki](https://github.com/NoWo2000/MOT-Multi-Functional-Bot/wiki).
