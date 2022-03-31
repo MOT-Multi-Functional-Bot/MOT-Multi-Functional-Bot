@@ -37,13 +37,13 @@
 
 # How to start your own MOT-Bot
 
-Any further information how to run a MOT, can be found in our [Github Repository](https://github.com/MOT-Multi-Functional-Bot/MOT-Multi-Functional-Bot)
+Any further information how to run a MOT, can be found in our [GitHub Repository](https://github.com/MOT-Multi-Functional-Bot/MOT-Multi-Functional-Bot)
 
 # Use this Python Package
 
 - You can find our Python Package here: [MOT-Bot-Game Package](https://test.pypi.org/project/MOT-Bot-Games/)
 
-- Our package is based on the [Python Telegram Extension](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.html). To use our package you need to add each game into the "Commandhandler" in your `main.py` file. You need to import some of the methods like following:
+- Our package is based on the [Python Telegram Extension](https://python-telegram-bot.readthedocs.io/en/stable/telegram.ext.html). To use our package you need to add each game into the "Commandhandler" in your `main.py` file. You need to import some of the methods like the following:
 
 ```python
 # Imports for all Game Commands
@@ -62,7 +62,7 @@ dispatcher = updater.dispatcher
 pip install -i https://test.pypi.org/simple/ MOT-Bot-Games
 ```
 
-- With the package installd and the telegram extension imported, use the following commands to get started with the individual games:
+- With the package installed and the telegram library imported, use the following commands to get started with the individual games:
 
 Here is an example for Numbergame:
 
@@ -77,7 +77,7 @@ dispatcher.add_handler(CommandHandler("newnum", newnum))
 
 The word with quotes around it, will be the word you use in your telegram chat.
 
-All of oure games have specific methods you have to add to your Command Handler:
+All of our games have specific methods you have to add to your Command Handler:
 
 ### Numbergame:
 
