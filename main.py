@@ -1,8 +1,8 @@
 from conf import API_KEY
-from games.moviegame.moviegame_commands import GUESS, PLAYMODE, movieguess, movieguessinggame, playmode, stopgame
-from games.numbergame.numbergame_commands import numb, stopnumbergame, numbergame, newnum
-from games.wordle.wordle_commands import guess, howto, stats, stop, wordle
-from games.tictactoe.tictactoe import stoptictactoe, tictactoegame, pos
+from moviegame import GUESS, PLAYMODE, movieguess, movieguessinggame, playmode, stopgame
+from numbergame import numb, stopnumbergame, numbergame, newnum
+from wordle import guess, howto, stats, stop, wordle
+from tictactoe import stoptictactoe, tictactoegame, pos
 from main_commands import cat, echo, help, noodle, start
 from telegram.ext import CommandHandler, ConversationHandler, Filters, MessageHandler, Updater
 
